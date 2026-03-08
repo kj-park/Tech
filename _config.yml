@@ -17,12 +17,12 @@ defaults:
             path: "projects"
             type: "projects"
         values:
-            layout: "default"
+            layout: "posts"
             category: "projects"
     -
         scope:
             path: "pages"
             type: "pages"
         values:
-            layout: "default"
+            layout: "pages"
             category: "pages"
