@@ -1,10 +1,15 @@
 ---
-title: Azure AD Conditional Access Overview
-filename: Microsoft365\Security\Azure-AD-Conditional-Access-Overview.md
-ms.date: 2012.05.04
+layout: default
+title: Conditional Access Overview
+filename: Microsoft365\Security\Conditional-Access-Overview.md
+ms.date: 2026.05.05
 ---
 
-# Azure AD Conditional Access Overview
+# Conditional Access Overview
+
+
+Help defining an enterprise framework
+
 
 Modern 보안 경계는 조직의 네트워크를 넘어 사용자 와 장치의 Identity를 포함.
 
