@@ -7,9 +7,7 @@ ms.date: 2026.05.05
 
 # Conditional Access Overview
 
-
-Help defining an enterprise framework
-
+>Help defining an enterprise framework
 
 Modern 보안 경계는 조직의 네트워크를 넘어 사용자 와 장치의 Identity를 포함.
 
