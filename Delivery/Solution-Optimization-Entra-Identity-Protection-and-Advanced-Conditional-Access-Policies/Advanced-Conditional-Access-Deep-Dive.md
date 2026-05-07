@@ -267,6 +267,66 @@ Break Glass 계정의 모범 사례에 대해 논의하세요.
 *Ref: [Best Practices for the Break Glass Account](#Best-Practices-for-the-Break-Glass-Account)*
 
 
+### Planning for mandatory MFA for Azure sign-ins
+
+다단계 인증(MFA)은 계정 탈취 공격의 대부분을 차단할 수 있는 가장 효과적인 보안 조치 중 하나입니다.
+
+따라서 2024년부터는 모든 Azure 로그인 시도에 대해 필수 MFA가 적용되었습니다.
+
+**적용 단계(Enforcement phases)**와 그 단계가 **사용자 ID(user identities)**와 **워크로드 ID(workload identities)**에 미치는 영향에 대해 설명하시오.
+
+*Ref: [Enforcement phases](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#enforcement-phases)*
+
+*Ref: [user identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#accounts)*
+
+*Ref: [workload identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#migrate-user-based-service-accounts-to-workload-identities)*
+
+외부 인증 방법(external authentication methods)을 사용하는 외부 MFA 솔루션 지원은 현재 미리 보기(preview) 상태이며, 이를 통해 MFA 요구 사항을 충족할 수 있습니다. 기존의 Conditional Access 사용자 지정 컨트롤 미리 보기 기능은 MFA 요구 사항을 충족하지 못합니다. Microsoft Entra ID에서 외부 MFA 솔루션을 사용하려면 외부 인증 방법 미리 보기로 전환해야 합니다.
+
+*Ref: [external authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#external-authentication-methods-and-identity-providers)*
+
+일부 고객은 이 MFA 요구 사항을 준비하는 데 더 많은 시간이 필요할 수 있다는 점을 설명하시오. Microsoft는 환경이 복잡하거나 기술적 제약이 있는 고객이 테넌트에 대한 적용을 2025년 3월 15일까지 연기할 수 있도록 허용하고 있습니다.
+
+*Ref: [postpone the enforcement](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#request-more-time-to-prepare-for-enforcement)*
+
+### Universal Conditional Access through Global Secure Access
+
+관리자는 트래픽을 Global Secure Access로 보내는 것뿐만 아니라, Conditional Access 정책을 사용해 트래픽 프로필을 보호할 수 있습니다. 필요에 따라 MFA 요구, 규정 준수 디바이스 요구, 허용 가능한 로그인 위험 수준 설정 등 다양한 제어를 조합해 적용할 수 있습니다. 이러한 제어를 클라우드 애플리케이션뿐 아니라 네트워크 트래픽에도 적용하면 이를 ‘Universal Conditional Access’라고 합니다.
+
+또한 Conditional Access를 사용하면 Microsoft Entra Internet Access와 Microsoft Entra Private Access를 통해 수집된 네트워크 트래픽에 대해 접근 제어와 보안 정책을 적용할 수 있습니다.
+
+- 모든 Microsoft 트래픽을 대상으로 하는 정책을 만듭니다.
+- Quick Access와 같은 Private Access 앱에 Conditional Access 정책을 적용합니다.
+- 적절한 로그와 보고서에서 원본 IP 주소가 보이도록, Conditional Access에서 Global Secure Access 시그널링을 활성화합니다.
+
+알려진 터널 인증 제한 사항([Known tunnel authorization limitations](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-universal-conditional-access#known-tunnel-authorization-limitations))에 대해 설명합니다.
+
+Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Access 정책을 만드는 단계를 설명하시오.
+
+*Ref: [Create a Conditional Access policy targeting Global Secure Access internet traffic](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-target-resource-microsoft-profile#create-a-conditional-access-policy-targeting-global-secure-access-internet-traffic)*
+
+### Conditional Access behavior change: Improved enforcement for policies with resource exclusions
+
+2026년 5월 13일부터 리소스 제외가 포함된 Conditional Access 정책에 대해 동작 변경이 적용됩니다. 이 변경은 **Microsoft Secure Future Initiative**와 일치하는 조치입니다.
+
+*Ref: [Microsoft's Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative?msockid=22346ecb805f631739b27a6e81726266)*
+
+**What is changing?**
+
+**현재**는 클라이언트 애플리케이션이 OIDC 범위나 제한된 디렉터리 범위만 요청해 사용자가 로그인할 경우, **리소스 제외가 하나라도 포함**된 Conditional Access 정책은 ‘모든 리소스(All resources)’를 대상으로 하더라도 적용되지 않습니다.
+
+**변경 이후**에는 **리소스 제외가 있더라도** ‘모든 리소스(All resources)’를 대상으로 하는 Conditional Access 정책이 이러한 로그인에 적용됩니다. 이를 통해 애플리케이션이 어떤 범위(scope)를 요청하든 정책이 일관되게 적용되도록 보장합니다.
+
+이 변경 사항에 대한 전체 설명은 아래 두 문서를 참고하십시오:
+
+- [Upcoming Conditional Access change: Improved enforcement for policies with resource exclusions](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/upcoming-conditional-access-change-improved-enforcement-for-policies-with-resour/4488925)
+
+- [Conditional Access: Target resources - Legacy Conditional Access behavior when an ALL resources policy has a resource exclusion](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps?tabs=usage-and-insights-report#legacy-conditional-access-behavior-when-an-all-resources-policy-has-a-resource-exclusion)
+
+
+
+
+
 
 
 
