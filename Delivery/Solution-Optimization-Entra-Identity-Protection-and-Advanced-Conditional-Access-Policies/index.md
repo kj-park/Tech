@@ -324,9 +324,9 @@ Update-MgDevice -DeviceId $deviceId -BodyParameter $params
 
 >TODO
 
-### Authentication Strength 종류와 그 이해
+### Authentication methods and features
 
-
+>TODO
 
 ### 유용한 KQL 쿼리 예시 (Log Analytics 구독 필요)
 
