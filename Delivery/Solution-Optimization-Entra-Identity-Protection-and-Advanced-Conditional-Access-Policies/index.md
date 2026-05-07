@@ -56,3 +56,6 @@ ms.date: 05/06/2026
 :::note
     이것은 Note입니다.
 
+{% include admonition.html type="note" title="Note" content="이것은 노트입니다." %}
+
+
