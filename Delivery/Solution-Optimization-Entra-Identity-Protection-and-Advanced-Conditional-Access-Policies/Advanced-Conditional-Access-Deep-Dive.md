@@ -7,7 +7,9 @@ ms.date: 05/07/2026
 
 # Advanced Conditional Access - Deep Drive
 
-## Help defining an enterprise framework
+## Conditional Access
+
+### Help defining an enterprise framework
 
 **엔터프라이즈 프레임워크 정의 지원**
 
@@ -95,7 +97,7 @@ Protect your administrators: remember that Conditional Access policies support b
 
 ---
 
-## Automation via PowerShell
+### Automation via PowerShell
 
 Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조건부 액세스 정책을 다룰 수 있습니다. [Conditional Access APIs](https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccesspolicy?view=graph-rest-1.0)를 활용해 정책을 대규모로 관리할 수 있습니다.
 
@@ -104,7 +106,7 @@ Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조�
 
 ---
 
-## Authentication methods
+### Authentication methods
 
 인증 방법([Authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods))은 사용자가 애플리케이션과 리소스에 로그인할 때 자신의 신원을 증명하는 방식입니다. Microsoft Entra 다단계 인증(**multifactor authentication**)은 사용자가 로그인할 때 비밀번호만 사용하는 것보다 더 높은 보안을 제공합니다. 사용자는 추가 인증 수단(**additional forms of authentication**)을 요청받을 수 있으며, 예를 들어 푸시 알림에 응답하거나, 소프트웨어 또는 하드웨어 토큰에서 생성된 코드를 입력하거나, 문자 메시지 또는 전화에 응답하는 방식 등이 있습니다.
 
@@ -137,7 +139,7 @@ Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조�
 *Ref: [Migration between policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#migration-between-policies)*
 
 
-### Advanced settings
+#### Advanced settings
 
 Microsoft Entra 다단계 인증(MFA)의 최종 사용자 경험을 사용자 지정하려면, **계정 잠금 임계값(account lockout thresholds)이나 사기 의심(Fraud) 경고 및 알림**과 같은 설정 옵션을 구성할 수 있습니다.
 
@@ -159,7 +161,7 @@ Microsoft Entra 다단계 인증(MFA)의 최종 사용자 경험을 사용자 �
 
 ---
 
-## Impact and advanced reporting
+### Impact and advanced reporting
 
 Conditional Access 정책을 활성화하기 전에 영향도를 평가할 수 있도록 설계된 정책 상태인 [Report-only mode](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only)는 반드시 평가 목적으로만 사용해야 합니다.
 
@@ -204,9 +206,6 @@ Report-only 정책을 포함하여 Conditional Access 정책의 영향을 파악
     >
     > 로그인 로그를 다운로드할 때는 **JSON** 형식을 선택해야 Conditional Access Report-only 결과 데이터가 포함됩니다.
 
-
-
-
 - **[Microsoft Entra Sign-in diagnostics](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-use-sign-in-diagnostics?utm_source=copilot.com)**
 
      Entra ID에서 발생한 로그인 이벤트를 조사하고 문제를 분석하는 데 도움이 되는 도구입니다.
@@ -231,40 +230,92 @@ Microsoft Entra 로그를 Azure Monitor 로그와 아직 통합하지 않았다�
 
 1. [Integrate Microsoft Entra logs with Azure Monitor logs](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs).
 
-## Emergency access accounts
+---
+
+### Emergency access accounts
+
+Microsoft Entra 조직에서 관리자가 실수로 잠겨버리면 다른 사용자의 계정을 활성화하거나 로그인할 수 없기 때문에, 이러한 상황을 반드시 예방해야 합니다. 이를 방지하기 위해 조직 내에 두 개 이상의 비상 접근 계정(Emergency Access Accounts)을 만들어 두는 것이 좋습니다.
+
+*Ref: [Emergency Access Accounts](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access)*
+
+비상 접근 계정(Emergency access accounts)은 매우 높은 권한을 가진 계정이며, 특정 개인에게 할당되지 않습니다. 이러한 계정은 일반 관리자 계정을 사용할 수 없는 비상 상황, 즉 “브레이크 글래스(break glass)” 시나리오에서만 사용하도록 제한됩니다. 비상 계정은 정말 필요한 경우에만 사용되도록 엄격히 제한하는 것이 좋습니다.
+
+**왜 비상 접근 계정을 사용해야 하는가?**
+
+- 페더레이션된 사용자 계정 사용 불가:  
+
+    네트워크 문제나 서비스 중단으로 인해 ID 공급자(IdP)가 다운되면, Microsoft Entra ID가 IdP로 리디렉션할 때 사용자가 로그인하지 못할 수 있습니다.
+
+- 관리자가 MFA를 완료할 수 없는 경우:  
+
+    관리자 디바이스를 사용할 수 없거나 MFA 서비스가 중단되면, 역할 활성화에 필요한 다단계 인증을 완료할 수 없어 관리자 권한을 사용할 수 없게 됩니다.
+
+- 전역 관리자(Global Administrator) 계정 삭제:  
+
+    마지막 전역 관리자 계정이 온프레미스에서 삭제되거나 비활성화되면, Microsoft Entra ID의 보호 기능이 있더라도 조직은 해당 계정을 복구하는 데 어려움을 겪을 수 있습니다.
+
+- 예상치 못한 상황(예: 자연재해):  
+
+    자연재해와 같은 비상 상황에서는 모바일 및 네트워크 서비스가 중단될 수 있으며, 이로 인해 인증과 같은 중요한 리소스에 접근하지 못할 수 있습니다.
+
+Break Glass 계정을 생성하는 단계에 대해 설명하세요.
+
+*Ref: [Steps to Create Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#create-emergency-access-accounts)*
+
+Break Glass 계정의 모범 사례에 대해 논의하세요.
+
+*Ref: [Best Practices for the Break Glass Account](#Best-Practices-for-the-Break-Glass-Account)*
+
+
+
+
+
+## Appendix
+
+### Best Practices for the Break Glass Account
+
+1. **클라우드 전용 계정 생성** 
+
+    온프레미스 AD에서 동기화되는 계정이 아닌, Microsoft Entra ID에서 직접 생성한 계정이어야 합니다.
+
+    이는 온프레미스 장애나 동기화 문제로 인해 계정이 잠기는 상황을 방지하기 위함입니다.
+
+1. **Global Administrator 역할 부여**
+
+    Break Glass 계정은 비상 상황에서 모든 작업을 수행할 수 있어야 하므로 Global Administrator 역할을 부여합니다.
+
+1. **강력한 비밀번호 설정**
+
+    매우 길고 복잡한 비밀번호를 설정합니다.
+
+    비밀번호 만료 정책을 적용하지 않습니다.
+
+    비밀번호는 안전한 장소(금고 등)에 보관합니다.
+
+1. **Conditional Access 정책에서 명시적으로 제외**
+
+    모든 CA 정책에서 Break Glass 계정을 Exclusion 처리해야 합니다.
+
+    특히 MFA, 위치 제한, 디바이스 기반 정책 등에서 제외해야 비상 상황에서 잠기지 않습니다.
+
+1. **MFA 적용 금지**
+
+    비상 상황에서는 MFA가 장애 요소가 될 수 있으므로 Break Glass 계정에는 MFA를 적용하지 않습니다.
+
+1. **로그인 모니터링 구성**
+
+    Break Glass 계정은 평상시 사용되지 않아야 하므로 로그인 발생 시 즉시 알림을 받을 수 있도록 설정합니다.
+
+    Sign-in logs에서 정기적으로 로그인 여부를 점검합니다.
+
+1. **접근 절차 문서화**
+
+    누가, 언제, 어떤 절차로 이 계정에 접근할 수 있는지 명확히 문서화합니다.
+
+    최소 두 명 이상의 승인 절차를 요구하는 것이 좋습니다.
 
 
 
 
 
 
-
-
-
-It's important to prevent an accidental locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. This can be mitigated by creating two or more emergency access accounts in your organization.
-
-Emergency access accounts are highly privileged, and they aren't assigned to specific individuals. Emergency access accounts are limited to emergency or "break glass"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it's absolutely necessary.
-
-Why use an emergency access account
-
-Federated User Accounts Unavailable: If the identity provider is down due to a network issue or outage, users may be unable to sign in when redirected by Microsoft Entra ID.
-
-Administrators Unable to Complete MFA: If administrators' devices are unavailable or the MFA service is down, they may be unable to complete the required multifactor authentication for role activation.
-
-Global Administrator Account Deleted: If the last Global Administrator's account is deleted or disabled on-premises, the organization might face issues recovering the account, despite Microsoft Entra ID protections.
-
-Unforeseen Circumstances (e.g., Natural Disaster): Emergencies such as natural disasters can disrupt mobile and network services, preventing access to critical resources like authentication.
-
-Mention the Steps to Create Break Glass Account
-
-Discuss the Best Practices for the Break Glass Account
-
-
-
-
-
-[emergency access accounts](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access)
-
-[Steps to Create Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#create-emergency-access-accounts)
-
-[Best Practices for the Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#exclude-at-least-one-account-from-phone-based-multifactor-authentication)
