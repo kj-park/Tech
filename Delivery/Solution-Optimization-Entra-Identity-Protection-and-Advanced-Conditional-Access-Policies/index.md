@@ -24,7 +24,7 @@ ms.date: 05/06/2026
 
     ![Authentication methods Migration status](image-1.png)
     
-    > [[NOTE]]
+    > [!NOTE]
     >
     > [How to migrate MFA and SSPR policy settings to the Authentication methods policy for Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-methods-manage)
     
@@ -47,9 +47,9 @@ ms.date: 05/06/2026
 
 고객에게 [Registration Campaign]()을 실행하여 사용자들이 MS Authenticator를 구성하도록 유도하십시오.
 
->**NOTE**
+> [!NOTE]
 >
->Registration Campaign은 전화 통화나 SMS 같은 약한 MFA 방식으로 이미 등록한 사용자들에게 영향을 준다는 점을 기억하세요.
+> Registration Campaign은 전화 통화나 SMS 같은 약한 MFA 방식으로 이미 등록한 사용자들에게 영향을 준다는 점을 기억하세요.
 
 등록에 대한 더 많은 정보가 필요하다면 [User registration details](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/UserRegistrationDetails/menuId/AuthMethodsActivity)를 사용하세요.
 
@@ -59,10 +59,10 @@ ms.date: 05/06/2026
 
 ![Sign-ins by authentication requirement](image-5.png)
 
->**NOTE**
+> [!NOTE]
 >
->인증 요구 사항별 로그인(Sign-ins by authentication requirement)은 Microsoft Entra ID에서 단일 요소 인증과 다중 요소 인증이 각각 요구된 성공적인 사용자 대화형 로그인 수를 보여줍니다.
->타사 MFA 공급자에 의해 MFA가 적용된 로그인은 포함되지 않습니다.
+> 인증 요구 사항별 로그인(Sign-ins by authentication requirement)은 Microsoft Entra ID에서 단일 요소 인증과 다중 요소 인증이 각각 요구된 성공적인 사용자 대화형 로그인 수를 보여줍니다.
+> 타사 MFA 공급자에 의해 MFA가 적용된 로그인은 포함되지 않습니다.
 
 다음 기능들을 고객이 활성화하도록 검토하고 권장하세요:
 
@@ -127,15 +127,15 @@ ms.date: 05/06/2026
         각 로그인 항목을 클릭하면 더 자세한 정보를 볼 수 있으며, Basic Info 탭의 ‘Client App’ 필드에서 어떤 레거시 인증 프로토콜이 사용되었는지 확인할 수 있습니다.
         이 로그들은 레거시 인증에 의존하는 클라이언트를 사용 중인 사용자를 식별하는 데 도움이 됩니다.
 
-        >**NOTE**
+        > [!NOTE]
         >
-        >1. **구형 Microsoft Office 클라이언트**
+        > 1. **구형 Microsoft Office 클라이언트**
         >
         >    - **Office 2013 또는 그 이전 버전**
         >
         >    Modern Authentication(ADAL)을 지원하지 않아 기본 인증만 사용→ MFA 적용 불가, 보안 취약
         >
-        >1. **메일 프로토콜 기반 앱 (POP/IMAP/SMTP AUTH)**
+        > 1. **메일 프로토콜 기반 앱 (POP/IMAP/SMTP AUTH)**
         >
         >    - **POP3 클라이언트**
         >    
@@ -145,12 +145,12 @@ ms.date: 05/06/2026
         >    
         >    대부분 Basic Auth 기반으로 동작→ 비밀번호만으로 인증, 토큰 기반 인증 미지원
         >
-        >1. **구형 Exchange ActiveSync(EAS) 클라이언트**
+        > 1. **구형 Exchange ActiveSync(EAS) 클라이언트**
         >
         >    - 오래된 모바일 메일 앱(Android 기본 메일 앱의 구버전 등)
         >    - OAuth2를 지원하지 않는 버전→ Modern Auth 미지원
         >
-        >1. **기타 Basic Authentication 기반 앱**
+        > 1. **기타 Basic Authentication 기반 앱**
         >
         >    - 자체 개발된 레거시 애플리케이션
         >    
@@ -193,25 +193,25 @@ Unprotected Named locations.
 - 보호되지 않은 위치(Unprotected Locations)
 - 보호되지 않은 명명된 위치(Unprotected Named Locations)
 
->**Prerequisites**
+> [!IMPORTANT]
 >
->Log Analytics 작업 영역(Log Analytics workspace) 및 해당 작업 영역에 대한 액세스 권한
+> Log Analytics 작업 영역(Log Analytics workspace) 및 해당 작업 영역에 대한 액세스 권한
 
 Conditional Access Gap Analyzer 워크북을 사용하여 ‘보호되지 않은 앱(Unprotected Apps)’을 확인하는 예:
 
 ![Conditional Access Gap Analyzer workbook](image-7.png)
 
->**NOTE**
+> [!NOTE]
 >
->고객에게 [Conditional Access Documenter](https://idpowertoys.merill.net/ca)를 사용해 조건부 액세스 정책(CA)을 보기 좋은 PowerPoint 슬라이드로 내보내 분석할 수 있도록 안내할 수 있습니다.
+> 고객에게 [Conditional Access Documenter](https://idpowertoys.merill.net/ca)를 사용해 조건부 액세스 정책(CA)을 보기 좋은 PowerPoint 슬라이드로 내보내 분석할 수 있도록 안내할 수 있습니다.
 >
->단, CA Documenter는 Microsoft의 공식 1st-party 도구가 아니라는 점을 반드시 고객에게 알려주세요.  CA Documenter는 Entra ID 제품 그룹(PG) 팀의 한 엔지니어가 개발한 도구입니다.
+> 단, CA Documenter는 Microsoft의 공식 1st-party 도구가 아니라는 점을 반드시 고객에게 알려주세요.  CA Documenter는 Entra ID 제품 그룹(PG) 팀의 한 엔지니어가 개발한 도구입니다.
 >
->![Conditional Access Documenter](image-8.png)
+> ![Conditional Access Documenter](image-8.png)
 >
->**Conditional Access Policy Documentation:**
+> **Conditional Access Policy Documentation:**
 >
->![Conditional Access Policy Documentation](image-9.png)
+> ![Conditional Access Policy Documentation](image-9.png)
 
 ## Advanced scenarios
 
@@ -237,6 +237,8 @@ Conditional Access Gap Analyzer 워크북을 사용하여 ‘보호되지 않은
 
 또한, SPO에서 단계적 인증(step-up authentication)을 구현하는 방법은 *Advanced CAPs 기술 가이드*의 단계별 예제를 활용해 데모할 수 있습니다.
 
+>TODO: 문서 생성 및 문서 내 링크 추가 필요!
+
 ### **3. BYOD(Bring Your Own Device)**
 
 고객에게 BYOD 전략을 질문하세요:
@@ -257,29 +259,119 @@ Conditional Access Gap Analyzer 워크북을 사용하여 ‘보호되지 않은
 고객은 다음과 같은 보안 조치를 적용할 수 있습니다:
 
 - **Token Protection**
+
+    >TODO: Token Protection 링크에 대하여 확인 필요!
+
 - **CAE(Continuous Access Evaluation)**
 
-    - 참고: *Continuous Access Evaluation Insights* 워크북을 사용하여Entra와 리소스 제공자 간의 **IP 불일치(Mismatched IP)** 여부를 확인할 수 있습니다.
+    참고: *Continuous Access Evaluation Insights* 워크북을 사용하여Entra와 리소스 제공자 간의 **IP 불일치(Mismatched IP)** 여부를 확인할 수 있습니다.
 
-## **5. 클라우드 관리(Cloud Administration)**
+    ![Continuous Access Evaluation Insights](image-10.png)
+
+### **5. 클라우드 관리(Cloud Administration)**
 
 클라우드 환경에서의 관리자 보안을 강화하기 위해 다음과 같은 다양한 통제를 적용할 수 있습니다:
 
 - **PAW(Privileged Access Workstation) 디바이스만 허용하도록 디바이스 필터링 사용**
+
 - **PIM(Role elevation)에서 역할 상승 시 Authentication Context 적용**
+
 - **Authentication Strength 사용** (예: 피싱 저항 MFA 요구)
 
-## **6. 워크로드 ID(Workload Identities)는 어떻게 할까?**
+### **6. 워크로드 ID(Workload Identities)는 어떻게 할까?**
 
 워크로드 ID 보호를 위해 고객은 다음과 같은 조건부 액세스를 고려할 수 있습니다:
 
-- **위험 기반 조건부 액세스(Risk-based CA for workload identities)**
+- **위험 기반 조건부 액세스(Risk-based CA for workload identities)** 의심스러운 애플리케이션 활동을 자동으로 차단합니다.
 - **위치 기반 조건부 액세스(Location-based CA for workload identities)**
 
-## **7. B2B 시나리오(B2B Scenarios)**
+### **7. B2B 시나리오(B2B Scenarios)**
 
 고객에게 다음 사항을 질문해 보세요:
 
 - **Cross-tenant access settings(테넌트 간 액세스 설정)**을 어떻게 구성하고 있는가
+
+
+## Appendix
+
+### PAW(Privileged Access Workstation) 디바이스만 허용하도록 디바이스 필터링 사용
+
+#### 디바이스의 속성 업데이트
+
+```powershell
+Import-Module Microsoft.Graph.Identity.DirectoryManagement
+
+$params = @{ "extensionAttribute1" = "PAW" }
+
+Update-MgDevice -DeviceId $deviceId -BodyParameter $params    
+```
+
+> [!NOTE]
+>
+> **Update-MgDevice** - **Permissions**
+>
+> | Permission type | Permissions (from least to most privileged) |
+> | --- | --- |
+> | Delegated (work or school account) | Directory.AccessAsUser.All, |
+> | Delegated (personal Microsoft account) | Not supported |
+> | Application | Device.ReadWrite.All, Directory.ReadWrite.All, |
+
+#### CAP의 조건에 디바이스 필터링 구현
+
+![alt text](image-11.png)
+
+### PIM(Role elevation)에서 역할 상승 시 Authentication Context 적용
+
+>TODO
+
+### Authentication Strength 종류와 그 이해
+
+
+
+### 유용한 KQL 쿼리 예시 (Log Analytics 구독 필요)
+
+고객이 로그인 로그를 Log Analytics로 내보냈다면, KQL 쿼리를 사용하여 추가 분석을 수행하고 조건부 액세스(CA)가 사용자 인증에 어떤 영향을 미치는지에 대한 더 많은 데이터를 얻을 수 있습니다. 아래는 KQL 쿼리 예시들입니다.
+
+#### Sucessful authentication where no CA has been applied - you can leverage Unprotected Applications report in Conditional Access Gap Analyzer for similar results.
+ 
+```kusto
+SigninLogs | where TimeGenerated >= ago(30d) | where ConditionalAccessStatus == "notApplied" and ResultType == 0 | summarize Nb = count() by AppDisplayName | order by Nb
+```
+ 
+```kusto
+SigninLogs | where TimeGenerated >= ago(30d) | where ConditionalAccessStatus == "notApplied" and ResultType == 0 | project TimeGenerated, ResultType, ResultDescription, UserPrincipalName, Identity, Location, IPAddress, AppDisplayName,Status, AuthenticationRequirement, AuthenticationRequirementPolicies, ConditionalAccessStatus | order by TimeGenerated desc
+```
+
+#### Successful Authentication with Single Factor
+ 
+```kusto
+SigninLogs | where TimeGenerated >= ago(30d) | where ResultType == 0 and AuthenticationRequirement == "singleFactorAuthentication" | project TimeGenerated, ResultType, ResultDescription, UserPrincipalName, Identity, Location, IPAddress, AppDisplayName,Status, AuthenticationRequirement, AuthenticationRequirementPolicies, ConditionalAccessStatus | order by TimeGenerated desc
+```
+
+#### Successful access to aka.ms/mysecurityinfo (My Signin) with Single Factor and not from named locations
+
+```kusto
+SigninLogs | where TimeGenerated > ago(30d) | where AppDisplayName == "My Signins" and ResultType == 0 and AuthenticationRequirement == "singleFactorAuthentication" and NetworkLocationDetails == "[]" | project TimeGenerated, ResultType, UserPrincipalName, Identity, Location, NetworkLocationDetails, AppDisplayName, AppId, AuthenticationRequirement, ConditionalAccessStatus, IPAddress
+``` 
+
+#### Seccessful Risky sign-in wih single factor.
+
+```kusto
+SigninLogs | where TimeGenerated >= ago(30d) | where RiskLevelAggregated in ("medium", "high") | where ResultType == 0 and AuthenticationRequirement == "singleFactorAuthentication" | project TimeGenerated, ResultType, UserPrincipalName, Identity, Location, NetworkLocationDetails, AppDisplayName, AppId, AuthenticationRequirement, ConditionalAccessStatus, IPAddress, RiskLevelAggregated
+```
+
+#### Weak MFA methods - Better to use Uage and Insight
+
+```kusto
+SigninLogs | where TimeGenerated > ago(30d) | extend AuthDetails = parse_json(AuthenticationDetails) // Convert string to JSON | mv-expand AuthDetails // Expand authentication steps if multiple exist | extend AuthMethod = tostring(AuthDetails.authenticationMethod) // Extract MFA method //| where isnotempty(AuthMethod) // Ensure the field is not empty | summarize count() by AuthMethod
+```
+
+### Statistics about Application of CAP
+
+```kusto
+SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicies | extend Policy = parse_json(ConditionalAccessPolicies) | summarize SuccessCount = countif(tostring(Policy.result) == "success"), FailureCount = countif(tostring(Policy.result) == "failure"), NotAppliedCount = countif(tostring(Policy.result) == "notApplied") by PolicyName = tostring(Policy.displayName)
+```
+
+
 
 
