@@ -75,7 +75,7 @@ ms.date: 05/06/2026
 
 **알려진 위치가 정의되어 있는지 확인하세요.**
 
-조건부 액세스에서 명명된 위치(named locations)를 구성하고, VPN 대역을 Defender for Cloud Apps에 추가하는 것이 중요합니다.
+조건부 액세스에서 명명된 위치(named locations)를 구성하고, VPN 대역을 [Defender for Cloud Apps](https://learn.microsoft.com/en-us/defender-cloud-apps/ip-tags#create-an-ip-address-range)에 추가하는 것이 중요합니다.
 신뢰되거나 알려진 위치로 표시된 명명된 위치에서 발생한 로그인은 Microsoft Entra ID Protection의 위험 계산 정확도를 향상시킵니다.
 이러한 위치에서 인증하면 사용자의 위험도가 낮아지며, 이는 환경에서 특정 탐지 항목의 오탐(false positive)을 줄이는 데 도움이 됩니다.
 
