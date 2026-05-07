@@ -377,6 +377,7 @@ SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicie
 ## Next Steps
 
 [Advanced Conditional Access - Deep Dive](Advanced-Conditional-Access-Deep-Dive)
+
 [Entra Identity Protection - Deep Dive](Entra-Identity-Protection-Deep-Dive)
 
 > [!NOTE]
