@@ -40,3 +40,19 @@ ms.date: 05/06/2026
 - Users capable of self-service password reset.
 
 ![Usage and Insight](image-3.png)
+
+모든 사용자는 강력한 인증을 받을 준비가 되어 있어야 합니다. 그렇지 않은 경우, 고객에게 Identity Protection registration 정책을 이용하도록 권장하십시오.
+
+인증 방식별로 등록된 사용자를 검토하십시오. 모든 사용자가 MS Authenticator를 등록한 상태여야 합니다.
+
+![Users registered by authentication method](image-2.png)
+
+고객에게 [Registration Campaign]()을 실행하여 사용자들이 MS Authenticator를 구성하도록 유도하십시오.
+
+
+!!! NOTE
+    이것은 Note입니다.
+
+:::note
+    이것은 Note입니다.
+
