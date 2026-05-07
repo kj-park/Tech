@@ -69,7 +69,7 @@ ms.date: 05/06/2026
 - [ ] **의심스러운 활동 신고**
 - [ ] **시스템 기본 다중 요소 인증(System-preferred multifactor authentication)**
 
-![Authentication methods | Settings](image-6.png)
+![Authentication methods - Settings](image-6.png)
 
 >TODO: 위 내용에 대한 설명을 더 추가
 
@@ -372,6 +372,13 @@ SigninLogs | where TimeGenerated > ago(30d) | extend AuthDetails = parse_json(Au
 SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicies | extend Policy = parse_json(ConditionalAccessPolicies) | summarize SuccessCount = countif(tostring(Policy.result) == "success"), FailureCount = countif(tostring(Policy.result) == "failure"), NotAppliedCount = countif(tostring(Policy.result) == "notApplied") by PolicyName = tostring(Policy.displayName)
 ```
 
+---
 
+## Next Steps
 
+[Advanced Conditional Access - Deep Dive](Advanced-Conditional-Access-Deep-Dive)
+[Entra Identity Protection - Deep Dive](Entra-Identity-Protection-Deep-Dive)
 
+> [!NOTE]
+>
+> [VBD Delivery Guidance](VBD-Delivery-Guidance)
