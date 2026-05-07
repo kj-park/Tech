@@ -93,8 +93,178 @@ Protect your administrators: remember that Conditional Access policies support b
             
             [Control security information registration with Conditional Access](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-policy-registration)
 
+---
+
 ## Automation via PowerShell
 
+Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조건부 액세스 정책을 다룰 수 있습니다. [Conditional Access APIs](https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccesspolicy?view=graph-rest-1.0)를 활용해 정책을 대규모로 관리할 수 있습니다.
+
+> [!WARNING]
+>제공된 예제는 지원 없이 있는 그대로 제공됩니다. 자동화를 직접 구축할 수 있으며, 필요하다면 Microsoft Graph의 [conditionalAccessRoot resource type - Microsoft Graph](https://learn.microsoft.com/en-us/graph/api/resources/conditionalaccessroot?view=graph-rest-1.0) 리소스 유형을 참고해 주세요.
+
+---
+
+## Authentication methods
+
+인증 방법([Authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods))은 사용자가 애플리케이션과 리소스에 로그인할 때 자신의 신원을 증명하는 방식입니다. Microsoft Entra 다단계 인증(**multifactor authentication**)은 사용자가 로그인할 때 비밀번호만 사용하는 것보다 더 높은 보안을 제공합니다. 사용자는 추가 인증 수단(**additional forms of authentication**)을 요청받을 수 있으며, 예를 들어 푸시 알림에 응답하거나, 소프트웨어 또는 하드웨어 토큰에서 생성된 코드를 입력하거나, 문자 메시지 또는 전화에 응답하는 방식 등이 있습니다.
+
+일부 인증 방법은 다른 방법보다 더 안전하며(**more secure than others**), 어떤 방법은 사용자에게 더 편리합니다(**more convenient**).
+
+어떤 인증 방법을 사용자에게 제공할지 결정하는 것은 매우 중요한 단계입니다. 
+
+레거시 인증 방법의 사용은 피하고(**avoid the usage of legacy authentication methods**), 보안성·사용성·가용성 측면에서 요구 사항을 충족하거나 초과하는 방법을 선택해야 합니다. 가능하다면 가장 높은(**highest**) 보안 수준([**level of security**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods#authentication-method-strength-and-security))을 제공하는 인증 방법을 사용하세요.
+
+![highest level of security](image-12.png)
+
+
+일부 인증 방법은 애플리케이션이나 디바이스에 로그인할 때 **기본 인증 요소(primary factor)**로 사용할 수 있습니다. 예를 들어 FIDO2 보안 키나 비밀번호가 이에 해당합니다. 
+
+반면, 다른 인증 방법들은 Microsoft Entra 다단계 인증(MFA) 또는 SSPR을 사용할 때만 **보조 인증 요소(secondary factor)**로 사용할 수 있습니다.
+
+*Ref: [How each authentication method works](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods#how-each-authentication-method-works)*
+
+
+인증 방법은 활성화하고 필요 시 구성해야 합니다. 현재는 **MFA와 SSPR 인증 방법을 관리하는 두 개의 별도 포털**이 존재합니다([Legacy MFA and SSPR policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#legacy-mfa-and-sspr-policies)).
+
+하지만 Microsoft는 이를 **새로운 통합 포털(Authentication methods policy)**로 전환하고 있습니다.
+
+[Authentication methods policy](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#authentication-methods-policy)
+
+고객에게 반드시 알려야 할 중요한 사항은 다음과 같습니다.**2025년 9월 30일부로 레거시 MFA 및 SSPR 정책이 사용 중단(Deprecated)되며, 이후 모든 인증 방법 관리는 새로운 Authentication Methods Policy 포털에서 이루어지게 됩니다.**
+
+따라서 고객은 이를 인지하고, 지금부터 **정책 간 마이그레이션 계획**을 수립해야 합니다.
+
+*Ref: [Migration between policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#migration-between-policies)*
+
+
+### Advanced settings
+
+Microsoft Entra 다단계 인증(MFA)의 최종 사용자 경험을 사용자 지정하려면, **계정 잠금 임계값(account lockout thresholds)이나 사기 의심(Fraud) 경고 및 알림**과 같은 설정 옵션을 구성할 수 있습니다.
+
+고객과의 대화에서 **의심스러운 활동 신고(Report suspicious activity)**, 즉 **Fraud Alert** 기능에 대해 언급하는 것이 좋습니다.
+
+이 기능을 활성화하면 사용자가 로그인 과정에서 **의심스러운 활동을 직접 신고**할 수 있습니다.
+
+*Ref: [Report suspicious activity](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity)*
+
+사용자가 의심스러운 활동을 신고하면 해당 사용자는 **고위험 사용자(High-risk users)** 목록과 **차단 목록(Blocklist)**에 자동으로 추가됩니다.
+
+*Ref: [Report suspicious activity and fraud alert](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity-and-fraud-alert)*
+
+**[시스템 선호 다단계 인증(System-preferred MFA)](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-system-preferred-multifactor-authentication?utm_source=copilot.com)**은 활성화할 수 있으며(기본값은 Microsoft 관리), 이를 통해 사용자에게 **가장 안전한 MFA 방법을 우선적으로 제시**할 수 있습니다.
+
+가장 안전한 인증 방법이 어떻게 결정되는지 이해하려면 다음 링크를 참고하세요
+
+*Ref: [How does system-preferred MFA determine the most secure method?](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-system-preferred-multifactor-authentication?utm_source=copilot.com#how-does-system-preferred-mfa-determine-the-most-secure-method)*
+
+---
+
+## Impact and advanced reporting
+
+Conditional Access 정책을 활성화하기 전에 영향도를 평가할 수 있도록 설계된 정책 상태인 [Report-only mode](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only)는 반드시 평가 목적으로만 사용해야 합니다.
+
+Report-only 정책을 포함하여 Conditional Access 정책의 영향을 파악하기 위해서는 다음 도구들을 활용해야 합니다:
+
+- [Conditional Access Insights and Reporting Workbook](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-insights-reporting)
+
+    개별 정책 또는 정책의 특정 하위 집합이 사용자 로그인에 어떤 영향을 미치는지 분석할 수 있습니다.
+
+    > [!NOTE]
+    >
+    > **Prerequisites**
+    >
+    > - A Log Analytics workspace to retain sign-in logs data and access to that workspace.
+    > - Microsoft Entra ID P1 licenses to use Conditional Access.
+
+- [What-If Tool](https://learn.microsoft.com/en-us/entra/identity/conditional-access/what-if-tool)
+
+    특정 시나리오를 검증하고 정책 적용 결과를 미리 확인할 수 있습니다.
+
+- Entra ID의 Conditional Access 관련 기본 제공 워크북  
+
+    정책 동작과 사용자 로그인 패턴을 시각적으로 분석하는 데 유용합니다.
+
+    *Ref: [How to use Microsoft Entra Workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks#sign-ins-by-conditional-access)*
+
+    > [!NOTE]
+    >
+    > **Prerequisites**
+    >
+    > - A Microsoft Entra tenant with a [Premium P1 license](https://learn.microsoft.com/en-us/entra/fundamentals/get-started-premium)
+    > - A Log Analytics workspace *and* access to that workspace
+    > - The appropriate roles for Azure Monitor *and* Microsoft Entra ID
+
+- Entra ID 로그인 로그(Sign-in logs) 내 CA 정책 상세 정보  
+
+    각 로그인 이벤트에 대해 어떤 CA 정책이 적용되었는지, Report-only 결과는 무엇인지 확인할 수 있습니다.
+
+    *Ref: [Troubleshoot sign-in problems with Conditional Access](https://learn.microsoft.com/en-us/entra/identity/conditional-access/troubleshoot-conditional-access#policy-details)*
+
+    > [!NOTE]
+    >
+    > 로그인 로그를 다운로드할 때는 **JSON** 형식을 선택해야 Conditional Access Report-only 결과 데이터가 포함됩니다.
 
 
 
+
+- **[Microsoft Entra Sign-in diagnostics](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-use-sign-in-diagnostics?utm_source=copilot.com)**
+
+     Entra ID에서 발생한 로그인 이벤트를 조사하고 문제를 분석하는 데 도움이 되는 도구입니다.
+
+    - **사용자 경험 관련 언급:** **Flagging(플래그 지정)** 기능을 활성화하면, 사용자가 브라우저에서 로그인 시도 중 인증 오류를 경험한 경우, 그 시점부터 **20분 동안** 동일한 브라우저와 동일한 클라이언트 디바이스에서 발생하는 모든 로그인 이벤트에 대해 **Sign-ins 보고서에 “Flagged for Review: Yes”**가 표시됩니다.20분이 지나면 플래그는 자동으로 해제됩니다.
+    
+    *Ref: [Flagged sign-ins](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/overview-flagged-sign-ins?utm_source=copilot.com)*
+    
+    - **[Policy impact (Preview)](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only?utm_source=copilot.com#policy-impact-preview "learn.microsoft.com")** Conditional Access 정책이 조직의 대화형 로그인에 미칠 수 있는 잠재적 또는 실제 영향을 한눈에 볼 수 있는 기능입니다.
+    
+        이 기능을 사용하면 다음과 같은 분석이 가능합니다:
+    
+        - 지난 **24시간**, **7일**, **1개월** 동안의 정책 영향도 탐색
+        - 정책이 로그인에 어떤 영향을 주었는지 요약된 스냅샷 확인
+        - 추가 분석을 위해 관련 로그인 이벤트 샘플로 바로 이동
+        
+        이 기능은 최소 **Security Reader** 역할을 가진 관리자라면 사용할 수 있습니다.
+
+Microsoft Entra 로그를 Azure Monitor 로그와 아직 통합하지 않았다면, **워크북(Workbooks) 기능**을 사용하기 위해 다음 단계를 수행해야 합니다.:
+
+1. [Create a Log Analytics workspace in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace).
+
+1. [Integrate Microsoft Entra logs with Azure Monitor logs](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs).
+
+## Emergency access accounts
+
+
+
+
+
+
+
+
+
+It's important to prevent an accidental locked out of your Microsoft Entra organization because you can't sign in or activate another user's account as an administrator. This can be mitigated by creating two or more emergency access accounts in your organization.
+
+Emergency access accounts are highly privileged, and they aren't assigned to specific individuals. Emergency access accounts are limited to emergency or "break glass"' scenarios where normal administrative accounts can't be used. We recommend that you maintain a goal of restricting emergency account use to only the times when it's absolutely necessary.
+
+Why use an emergency access account
+
+Federated User Accounts Unavailable: If the identity provider is down due to a network issue or outage, users may be unable to sign in when redirected by Microsoft Entra ID.
+
+Administrators Unable to Complete MFA: If administrators' devices are unavailable or the MFA service is down, they may be unable to complete the required multifactor authentication for role activation.
+
+Global Administrator Account Deleted: If the last Global Administrator's account is deleted or disabled on-premises, the organization might face issues recovering the account, despite Microsoft Entra ID protections.
+
+Unforeseen Circumstances (e.g., Natural Disaster): Emergencies such as natural disasters can disrupt mobile and network services, preventing access to critical resources like authentication.
+
+Mention the Steps to Create Break Glass Account
+
+Discuss the Best Practices for the Break Glass Account
+
+
+
+
+
+[emergency access accounts](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access)
+
+[Steps to Create Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#create-emergency-access-accounts)
+
+[Best Practices for the Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#exclude-at-least-one-account-from-phone-based-multifactor-authentication)
