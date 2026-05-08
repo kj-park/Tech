@@ -230,8 +230,6 @@ Microsoft Entra 로그를 Azure Monitor 로그와 아직 통합하지 않았다�
 
 1. [Integrate Microsoft Entra logs with Azure Monitor logs](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs).
 
----
-
 ### Emergency access accounts
 
 Microsoft Entra 조직에서 관리자가 실수로 잠겨버리면 다른 사용자의 계정을 활성화하거나 로그인할 수 없기 때문에, 이러한 상황을 반드시 예방해야 합니다. 이를 방지하기 위해 조직 내에 두 개 이상의 비상 접근 계정(Emergency Access Accounts)을 만들어 두는 것이 좋습니다.
@@ -322,6 +320,84 @@ Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Acce
 - [Upcoming Conditional Access change: Improved enforcement for policies with resource exclusions](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/upcoming-conditional-access-change-improved-enforcement-for-policies-with-resour/4488925)
 
 - [Conditional Access: Target resources - Legacy Conditional Access behavior when an ALL resources policy has a resource exclusion](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps?tabs=usage-and-insights-report#legacy-conditional-access-behavior-when-an-all-resources-policy-has-a-resource-exclusion)
+
+---
+
+## Authentication strength
+
+이 섹션에서 설명한 것처럼, 관리자는 사용자에게 어떤 인증 방법을 제공할지 구성할 수 있습니다.
+
+[Authentication Strength](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths)를 사용하면 관리자는 민감한 리소스 접근, 사용자 위험도, 위치 등 특정 시나리오에 따라 인증 방법 사용을 더 세밀하게 제어할 수 있습니다.
+
+예를 들어, 고가치 애플리케이션에 접근해야 하는 권한 있는 사용자는 FIDO2 보안 키로 인증하도록 요구하고, 민감도가 낮은 애플리케이션에는 일반 사용자가 전화나 문자 메시지 인증을 사용하도록 허용할 수 있습니다. Authentication Strength와 Authentication Context를 함께 사용하면 PIM을 통한 권한 역할 활성화나 SharePoint 사이트 접근 같은 민감한 작업을 보호할 수 있습니다.
+
+이 가이드의 Authentication Context 섹션에서 몇 가지 예시를 확인할 수 있으며, 추가 시나리오는 ‘Authentication Strengths 시나리오’ 문서에서 확인할 수 있습니다.
+
+*Ref: [Scenarios for authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#scenarios-for-authentication-strengths)*
+
+인증 강도를 지정하려면, Conditional Access 정책을 만들고 ‘**인증 강도 요구(Require authentication strength)**’ 제어를 설정하십시오.
+
+![Require authentication strength](image-13.png)
+
+세 가지 기본 제공 인증 강도(다중 인증 강도, 패스워드리스 MFA 강도, 피싱 대응 MFA 강도) 중에서 선택할 수 있으며, 허용하려는 인증 방법 조합을 기반으로 사용자 지정 인증 강도를 만들 수도 있습니다.
+
+*Ref: [**built-in authentication strengths**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#built-in-authentication-strengths)*
+
+> [!NOTE]
+>
+> - **MFA strength**: ‘다중 인증 요구(Require multifactor authentication)’ 설정을 충족하는 데 사용할 수 있는 동일한 인증 조합을 포함합니다.
+> - **Passwordless MFA strength**: 패스워드리스 MFA 강도: MFA 요건을 충족하지만 비밀번호를 요구하지 않는 인증 방법을 포함합니다.
+> - **Phishing-resistant MFA strength**: 피싱 대응 MFA 강도: 인증 방법과 로그인 화면 간의 상호작용을 필요로 하는 인증 방식을 포함합니다.
+
+| Authentication method combination | MFA strength | Passwordless MFA strength | Phishing-resistant MFA strength |
+| --- | --- | --- | --- |
+| FIDO2 security key | ✅ | ✅ | ✅ |
+| Windows Hello for Business or platform credential | ✅ | ✅ | ✅ |
+| Certificate-based authentication (multifactor) | ✅ | ✅ | ✅ |
+| Microsoft Authenticator (phone sign-in) | ✅ | ✅ |  |
+| Temporary Access Pass (one-time use and multiple use) | ✅ |  |  |
+| Password plus something the user has<sup>1</sup> | ✅ |  |  |
+| Federated single-factor plus something the user has<sup>1</sup> | ✅ |  |  |
+| Federated multifactor | ✅ |  |  |
+| Certificate-based authentication (single-factor) |  |  |  |
+| SMS sign-in |  |  |  |
+| Password |  |  |  |
+| Federated single-factor |  |  |  |
+
+<sup>1</sup> 사용자가 소유한 요소(Something the user has)는 다음 인증 방법 중 하나를 의미합니다: 문자 메시지, 음성 통화, 푸시 알림, 소프트웨어 OATH 토큰, 또는 하드웨어 OATH 토큰.
+
+
+*Ref: [**create a custom authentication strength**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#custom-authentication-strengths)*
+
+---
+
+## Authentication context
+
+Authentication Context를 적용할 수 있는 일반적인 시나리오를 설명하시오.
+
+### Privileged Identity Management
+
+권한 있는 역할을 받을 자격이 있는 사용자에게 Conditional Access 정책 요구 사항을 충족하도록 설정할 수 있습니다. 예를 들어, Authentication Strengths로 강제되는 특정 인증 방법을 사용하도록 요구하거나, Intune 규정 준수 디바이스에서만 역할을 상승시키도록 하거나, 이용 약관 준수를 요구할 수 있습니다.
+
+#### **Consider demoing a PIM role activation**
+
+1. 사용자 지정 인증 강도를 생성하시오. 단, SMS는 포함하지 마십시오.
+
+    ![New authentication strength](image-14.png)
+
+    *Ref: [Create and manage custom Conditional Access authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strength-advanced-options)*
+
+1. Conditional Access 정책과 연결될 Authentication Context를 생성하시오.
+
+    ![Authentication Context](image-15.png)
+
+    *Ref: [Configure authentication contexts](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps?tabs=powershell#configure-authentication-contexts)*
+
+1. PIM에서 역할 설정을 수정하여 역할 활성화 시 Authentication Context가 필요하도록 구성하시오.
+
+    *Ref: [On activation, require Microsoft Entra Conditional Access authentication context](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings#on-activation-require-microsoft-entra-conditional-access-authentication-context)*
+
+    ![Edit role setting - On Activation - authentication context](image-16.png)
 
 
 
