@@ -373,13 +373,25 @@ Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Acce
 
 ## Authentication context
 
+Authentication Context는 애플리케이션 내의 데이터와 작업을 더욱 안전하게 보호하는 데 사용할 수 있습니다. 사용자가 민감한 데이터나 작업에 접근할 때 특정 정책을 트리거하도록 구성할 수 있습니다.
+
+Authentication Context는 **Protection > Conditional Access > Authentication context**에서 관리되며, 조직은 **총 99개의 Authentication Context(C1–C99)**만 생성할 수 있다는 점에 유의해야 합니다. 가능한 한 여러 리소스에서 공통으로 사용할 수 있는 이름(예: **"C1 - 신뢰할 수 있는 디바이스 요구"**)을 사용하여 필요한 Authentication Context 수를 줄이는 것을 권장합니다.
+
+관리자는 Conditional Access 정책의 **Assignments > Cloud apps or actions**에서 게시된 Authentication Context를 선택하고, *Select what this policy applies to* 메뉴에서 **Authentication context**를 선택할 수 있습니다.
+
+현재 **“매번 로그인 빈도 요구(sign-in frequency every time)”** 세션 제어는 **Authentication Context와 함께 사용할 수 없다는 점**도 참고해야 합니다.
+
+### Authentication context scenarios
+
 Authentication Context를 적용할 수 있는 일반적인 시나리오를 설명하시오.
 
-### Privileged Identity Management
+
+
+#### Privileged Identity Management
 
 권한 있는 역할을 받을 자격이 있는 사용자에게 Conditional Access 정책 요구 사항을 충족하도록 설정할 수 있습니다. 예를 들어, Authentication Strengths로 강제되는 특정 인증 방법을 사용하도록 요구하거나, Intune 규정 준수 디바이스에서만 역할을 상승시키도록 하거나, 이용 약관 준수를 요구할 수 있습니다.
 
-#### **Consider demoing a PIM role activation**
+##### **Consider demoing a PIM role activation**
 
 1. 사용자 지정 인증 강도를 생성하시오. 단, SMS는 포함하지 마십시오.
 
@@ -423,9 +435,98 @@ Authentication Context를 적용할 수 있는 일반적인 시나리오를 설�
 
     ![Verify your identity](image-19.png)
 
-    *TODO: 위 그림과 같이 되지 않고 아래 그림과 같이 실패함. 원인 파악 필요. 
+    >TODO: 위 그림과 같이 되지 않고 아래 그림과 같이 실패함. 원인 파악 필요. 
 
     ![alt text](image-20.png)
+
+**활성화 시 Microsoft Entra Conditional Access Authentication Context 요구** 설정은 사용자가 역할을 활성화할 때 충족해야 하는 Authentication Context 요구 사항을 정의합니다. 역할이 활성화된 이후에는 사용자가 다른 브라우저 세션, 디바이스, 또는 위치에서 권한을 사용하는 것이 제한되지 않습니다.
+
+예를 들어, 사용자가 Intune 규정 준수 디바이스를 사용해 역할을 활성화할 수 있습니다. 그런 다음 역할이 활성화된 후에는 Intune 규정 비준수 디바이스에서 동일한 사용자 계정으로 로그인하여 이미 활성화된 역할을 사용할 수도 있습니다.
+
+이러한 상황을 방지하려면 다음과 같이 두 개의 Conditional Access 정책을 만들 수 있습니다:
+
+- **첫 번째 Conditional Access 정책**은 Authentication Context를 대상으로 합니다. 모든 사용자 또는 해당 역할의 자격이 있는 사용자를 범위에 포함해야 합니다. 이 정책은 사용자가 역할을 활성화할 때 충족해야 하는 요구 사항을 정의합니다.
+- **두 번째 Conditional Access 정책**은 디렉터리 역할을 대상으로 합니다. 이 정책은 사용자가 활성화된 디렉터리 역할로 로그인할 때 충족해야 하는 요구 사항을 정의합니다.
+
+#### SharePoint and OneDrive
+
+Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책을 SharePoint 사이트에 연결할 수 있습니다. 정책은 사이트에 직접 적용하거나 민감도 레이블을 통해 적용할 수 있습니다.
+
+> [!IMPORTANT]
+>
+> 이 기능은 SharePoint의 루트 사이트(예: https://contoso.sharepoint.com)에는 적용할 수 없습니다.
+
+##### 요구 사항과 제한 사항
+
+요구 사항([requirements](https://learn.microsoft.com/en-us/sharepoint/authentication-context-example#what-do-you-need-to-set-up-conditional-access-policies)) 및 제한 사항([limitations](https://learn.microsoft.com/en-us/sharepoint/authentication-context-example#limitations))에 대하여 설명합니다.
+
+- 기본적으로 필요한 라이선스(둘 중 하나 이상)
+
+    - **Office 365 E3 / E5 / A5**
+    - **Microsoft 365 E1 / E3 / E5 / A5**
+
+- 추가로 필요한 라이선스(둘 중 하나 이상)
+
+    - **Microsoft 365 Copilot 라이선스** → 조직 내 최소 1명에게 Copilot 라이선스가 있으면 SharePoint 관리자에게 필요한 고급 관리 기능이 자동 활성화됨.
+    - **Microsoft SharePoint Advanced Management(고급 관리) 라이선스** → 별도 구매 가능.
+
+- 추가 고려 라이선스(특정 기능 사용 시 필요)
+
+    - Microsoft 365 E5/A5/G5
+    - Microsoft 365 E5/A5 Compliance
+    - Microsoft 365 E5 Information Protection & Governance
+    - Office 365 E5/A5/G5
+
+- 관리자 권한 요구 사항
+
+    SharePoint 관리자 또는 동등한 권한이 있어야 함.
+
+- **제한 사항**
+
+    Authentication Context를 적용하면 일부 앱/기능이 동작하지 않음:
+    
+    - 구버전 Office 앱
+    - SharePoint 모바일 앱
+    - Viva Engage
+    - Teams의 일부 기능(채널 OneNote 추가, 녹화 업로드 등)
+    - OneDrive 동기화
+    - Power BI의 “SharePoint 리스트 시각화”
+    - Outlook 앱(Win/Mac/iOS/Android)에서 인증 컨텍스트 적용 사이트 접근 불가
+    - 다중 파일 다운로드, 지역 간 파일 이동 등 일부 기능 제한
+
+##### Consider demoing or testing in your environment
+
+테스트 또는 데모를 위해 환경에서 직접 구성해볼 수 있습니다.
+민감도 레이블(Sensitivity Label)을 생성하거나 수정한 뒤, Conditional Access Authentication Context를 적용하고 접근을 테스트하십시오. 이 예시에서는 Authentication Strength를 요구합니다(자세한 내용은 위의 “Authentication Strength” 섹션 참고).
+고도의 민감한 콘텐츠가 포함된 SharePoint 사이트에 접근하려면 관리자 승인 인증 방법을 사용하여 인증해야 합니다.
+
+###### Enable sensitivity labels for SharePoint and OneDrive
+
+
+
+
+
+
+
+
+
+###### Create or edit a sensitivity label
+
+
+
+
+
+
+
+
+
+###### Test access
+
+
+
+
+
+
 
 
 
