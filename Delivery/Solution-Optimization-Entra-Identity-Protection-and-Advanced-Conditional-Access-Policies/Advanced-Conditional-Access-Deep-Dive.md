@@ -399,8 +399,33 @@ Authentication Context를 적용할 수 있는 일반적인 시나리오를 설�
 
     ![Edit role setting - On Activation - authentication context](image-16.png)
 
+1. Conditional Access 정책에서 Authentication Context를 추가하고, Grant 섹션에서 이전에 생성한 인증 강도를 선택하십시오.
 
+    ![alt text](image-18.png)
 
+1. 해당 역할에 대한 자격이 있는 사용자로 로그인하십시오. MFA가 필요한 경우, 이전에 생성한 인증 강도에 포함되지 않은 인증 방법(예: SMS)을 사용할 수 있습니다.
+
+    ![alt text](image-21.png)
+
+    *or*   
+
+    ![MFA - SMS](image-17.png)
+
+    ***Ref: MFA - SMS인증으로 로그인하는 과정***
+
+1. PIM을 사용하여 역할을 활성화하십시오. 이때 Conditional Access 정책을 충족해야 합니다. 이 예시에서는 SMS가 인증 강도에 포함되지 않았기 때문에 Microsoft Authenticator를 사용해 MFA를 완료해야 합니다. 
+
+    ![Azure PIM - My roles](image-22.png)
+
+    *or*
+
+    ![Entra ID PIM - My roles](image-23.png)
+
+    ![Verify your identity](image-19.png)
+
+    *TODO: 위 그림과 같이 되지 않고 아래 그림과 같이 실패함. 원인 파악 필요. 
+
+    ![alt text](image-20.png)
 
 
 
