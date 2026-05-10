@@ -502,12 +502,84 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
 
 ###### Enable sensitivity labels for SharePoint and OneDrive
 
+1. 전역 관리자로 Microsoft Purview 규정 준수 포털에 로그인한 후, 다음 경로로 이동합니다:
+
+    Solutions > Information protection > Labels
+
+1. Office 온라인 파일에서 콘텐츠를 처리하는 기능을 활성화하라는 메시지가 표시되면, **Turn on now(지금 켜기)**를 선택합니다:
+
+    ![Turn on Labels](image-24.png)
+
+1. 아직 컨테이너에 대한 민감도 레이블을 활성화하지 않았다면, 다음 단계를 1회성 작업으로 수행합니다:
+
+    1. 민감도 레이블 지원 활성화: Microsoft Entra ID에서 Microsoft 365 그룹에 민감도 레이블을 할당합니다.
+
+        ```powershell
+        
+        Install-Module Microsoft.Graph -Scope AllUsers
+        
+        Install-Module Microsoft.Graph.Beta -Scope AllUsers
+        
+        Connect-MgGraph -Scopes "Directory.ReadWrite.All"
+        
+        Get-MgContext
+        
+        Select-MgProfile -Name "Beta"
+        
+        ```
+        
+        **Check current settings**
+        
+        ```powershell
+        
+        Get-MgBetaDirectorySettingTemplate
+        
+        $grpUnifiedSetting = (Get-MgBetaDirectorySettingTemplate | where -Property DisplayName -Value "Group.Unified" -EQ)
+        
+        $Setting = $grpUnifiedSetting
+        
+        $grpUnifiedSetting.Values
+
+        
+        ```
+        
+        **비어 있는 경우 새 그룹 설정을 생성합니다**
+        
+        *Ref: [create new group settings](https://learn.microsoft.com/en-us/entra/identity/users/groups-settings-cmdlets)*
 
 
+        ```powershell
+                
+        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
+        
+        $Setting.Values
+        
+        $params = @{
+           Values = @(
+              @{
+                 Name = "EnableMIPLabels"
+                 Value = "True"
+              }
+           )
+        }
+        
+        Update-MgBetaDirectorySetting -DirectorySettingId $Setting.Id -BodyParameter $params
+        
+        ```
 
+        **다시 확인해 보세요. 이제 그룹 설정을 사용할 수 있어야 합니다.**
 
+        ```powershell
 
+        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
+        
+        $Setting.Values
 
+        ```
+
+    1. 이제 민감도 레이블을 Microsoft Entra ID와 동기화해야 합니다. 먼저 Security & Compliance PowerShell에 연결하세요.
+
+        *Ref: [Connect to Security & Compliance PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-scc-powershell?view=exchange-ps)*
 
 
 ###### Create or edit a sensitivity label
