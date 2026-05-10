@@ -386,7 +386,7 @@ SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicie
 
 ## More Reference
 
-[Ref - Microsoft Entra ID Protection - **Risk Detections**](Ref-Microsoft-Entra-ID-Protection-Risk-Detections)
+[Ref - Microsoft Entra ID Protection - Risk Detections](Ref-Microsoft-Entra-ID-Protection-Risk-Detections)
 
 [Ref - Risk-based access policies](Ref-Risk-based-access-policies)
 
