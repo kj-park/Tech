@@ -718,6 +718,35 @@ Microsoft Entra ID는 계속해서 정책 평가와 액세스 결정을 담당�
 [steps to Create an External MFA](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-external-method-manage#create-an-eam-in-the-admin-center)에 대하여 설명합니다.
 
 
+---
+
+## Identity Protection
+
+Entra ID Identity Protection은 조직을 ID 기반 위협으로부터 보호하는 데 도움을 주는 서비스입니다. 이 서비스는 머신 러닝과 휴리스틱을 사용하여 이상 징후와 위험한 로그인 행동을 감지하고, 잠재적인 침해나 계정 탈취 가능성을 관리자에게 알립니다. 또한 Conditional Access와 같은 도구에 신호를 전달하여 접근 제어 결정을 내리거나, 보안 정보 및 이벤트 관리(SIEM) 도구로 신호를 보내 추가 조사 및 상관 분석을 수행하는 등 위험을 완화하고 ID를 보호하기 위한 조치를 취할 수 있도록 지원합니다.
+
+모든 Entra ID Identity Protection 기능을 사용하려면 Microsoft Entra ID P2 라이선스가 필요하지만, 일부 제한된 기능은 Entra ID Free 및 Entra ID P1 라이선스에서도 사용할 수 있습니다. 자세한 내용은 Entra ID Protection 라이선스 요구 사항을 참고하세요.
+
+*Ref: [Entra ID Identity Protection - License requirements](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#license-requirements)*
+
+또한 Identity Protection을 사용하려면 사용자에게 Security Reader, Security Operator, Security Administrator, Global Reader 또는 Global Administrator 역할이 필요합니다. 자세한 내용은 Identity Protection 사용을 위한 필수 역할을 확인하세요.
+
+*Ref: [Entra ID Identity Protection - Required roles](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#required-roles)
+
+### Risk based policies
+
+Microsoft Entra ID P2 라이선스를 보유한 조직은 Microsoft Entra ID Protection의 로그인 위험 감지 기능을 포함한 조건부 액세스 정책을 생성할 수 있습니다.
+
+*Ref: [Microsoft Entra ID Protection sign-in risk detections](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks)*
+
+또한 Microsoft Entra ID Protection에서 구성되었던 기존(레거시) 위험 정책은 2026년 10월 1일에 사용 중단될 예정입니다. 고객이 아직 레거시 ID Protection 정책을 사용 중이라면 조건부 액세스 정책으로 전환하도록 안내해야 합니다. 자세한 내용은 ‘Migrate ID Protection risk policies to Conditional Access’를 참고하세요.
+
+*Ref: [Migrate ID Protection risk policies to Conditional Access](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#migrate-id-protection-risk-policies-to-conditional-access)*
+
+
+
+
+
+
 ## Appendix
 
 ### Best Practices for the Break Glass Account
