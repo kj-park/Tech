@@ -742,10 +742,85 @@ Microsoft Entra ID P2 라이선스를 보유한 조직은 Microsoft Entra ID Pro
 
 *Ref: [Migrate ID Protection risk policies to Conditional Access](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#migrate-id-protection-risk-policies-to-conditional-access)*
 
-위험(Risk)은 사용자 수준과 로그인(Sign-in) 수준에서 모두 감지될 수 있습니다.
+위험(Risk)은 사용자([User](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#user-risk-detections)) 수준과 로그인([Sign-in](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#sign-in-risk-detections)) 수준에서 모두 감지될 수 있습니다.
+
+![Risk-base CPA](image-33.png)
+
+> [!WARNING]
+>
+>동일한 조건부 액세스 정책에서 Sign-in Risk와 User Risk를 함께 사용하지 마세요. 조건부 액세스 엔진은 조건들 사이를 AND 논리로 평가하기 때문에, 예를 들어 Sign-in Risk와 User Risk가 모두 높을 때 조치를 요구하도록 설정했지만 실제로는 둘 중 하나만 높은 경우 정책이 트리거되지 않습니다. 따라서 Sign-in Risk용 정책과 User Risk용 정책을 각각 별도로 구성해야 합니다.
+
+#### Microsoft recommendation
+
+[Microsoft recommendation](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-configure-risk-policies#microsoft-recommendations)에 대하여 설명합니다.
+
+1. **User risk policy(사용자 위험 정책)**
+
+    - ✔ Microsoft 권장 설정
+
+        **사용자 위험 수준이 High일 때 → Require risk remediation(위험 완화 요구)**
+
+        즉, 계정이 이미 탈취되었을 가능성이 매우 높을 때는사용자가 스스로 보안 절차를 수행하여 계정을 복구하도록 요구하는 방식입니다.
+
+    - ✔ 사용자 유형별 동작
+
+        - **패스워드리스 사용자** → Microsoft Entra가 해당 사용자의 모든 세션을 취소하고, 다시 인증하도록 요구함
+        - **비밀번호 기반 사용자** → MFA 인증에 성공한 후 **보안 비밀번호 변경(secure password change)** 을 완료해야 함
+
+    - ✔ Require risk remediation을 선택하면 자동 적용되는 설정
+
+        1. **Require authentication strength**(인증 강도 요구) — 자동으로 Grant control에 선택됨
+        2. **Sign-in frequency = Every time** — 매 로그인마다 재인증하도록 Session control 자동 적용
+
+1. **Sign-in risk policy(로그인 위험 정책)**
+
+    - ✔ Microsoft 권장 설정
+    
+        **로그인 위험 수준이 Medium 또는 High일 때 → MFA 요구**
+        
+        즉, 로그인 시도가 수상할 때는사용자가 본인임을 증명하도록 MFA를 요구하는 방식입니다.
+    
+    - ✔ 왜 MFA인가?
+    
+        - 사용자가 등록한 인증 방법 중 하나로 본인임을 증명할 수 있음
+        - 이를 통해 **로그인 위험을 스스로 해소(self-remediate)** 할 수 있음
+    
+    - ✔ 추가 권장 설정
+    
+        - **Sign-in frequency = Every time** → 위험한 로그인은 매번 재인증하도록 설정하는 것이 권장됨
+    
+    - ✔ 중요한 점
+    
+        - 로그인 위험은 **강력한 인증(strong authentication)** 을 통해서만 해소됨
+    
+            - MFA 또는 패스워드리스 인증
+            - 위험 수준과 관계없이 동일하게 적용됨
+
+#### User risk policy
 
 
+#### Sign-in risk policy
 
+
+### Microsoft Entra multifactor authentication registration policy
+
+
+### Identity threat detection and response (ITDR
+
+---
+
+## Advanced filtering
+
+## Browser Session Control
+
+## Sign-in frequency (SIF)
+
+## Continuous Access Evaluation CAE
+
+## Token Protection
+
+
+## B2B Scenarios
 
 ## Appendix
 
