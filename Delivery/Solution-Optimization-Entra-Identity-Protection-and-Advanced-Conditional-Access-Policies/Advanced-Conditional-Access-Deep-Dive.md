@@ -848,29 +848,92 @@ Risk-based 정책을 사용할 때의 또 다른 장점은, 사용자가 로그�
 
 *Ref: [self-remediate their sign-in risks and user risks](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#self-remediation-with-risk-based-policy)*
 
-이를 위해 사용자는 반드시 Self-Service Password Reset(SSPR)에 등록되어 있어야 합니다.
+이를 위해 사용자는 반드시 **Self-Service Password Reset(SSPR)**에 등록되어 있어야 합니다.
 
+Password Hash Synchronization(PHS)을 활성화한 조직은 이제 온프레미스에서 비밀번호 변경을 수행하여 사용자 위험(User Risk)을 완화할 수 있습니다.
 
+*Ref: [password hash synchronization](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-phs)*
 
-
-
-
-
-
-
-
-
-
-
+*Ref: [allow password changes on-premises to remediate user risk.](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#allow-on-premises-password-reset-to-remediate-user-risks-preview)*
 
 ### Microsoft Entra multifactor authentication registration policy
 
+Microsoft Entra ID Protection은 조직이 Microsoft Entra MFA 등록을 단계적으로 도입할 수 있도록 지원합니다.
 
-### Identity threat detection and response (ITDR
+사용자가 어떤 최신 인증 앱(modern authentication app)을 사용하든 MFA 등록을 필수로 요구할 수 있습니다.
+
+이 정책은 사용자가 **강력한 인증 수단**을 갖추도록 보장하며, **MFA를 처음 활성화할 때 발생하는 사용자 불편을 줄이는 데** 도움을 줍니다. 또한 Identity Protection에서 위험이 감지되었을 때, 조직이 **사용자 스스로 위험을 완화(Self-remediate)**할 수 있도록 준비시키는 데 중요한 역할을 합니다.
+
+Identity Protection의 **MFA 등록 정책**을 사용하면, 자격 증명 탈취나 무단 액세스 위험을 줄여 **조직의 전반적인 보안 수준을 향상**할 수 있습니다. 또한 특정 시나리오나 데이터 유형에 대해 MFA를 요구하는 **규제 요건 및 산업 표준을 준수**하는 데에도 도움이 됩니다.
+
+추가로, 사용자가 **선호하는 MFA 방식을 직접 선택**할 수 있도록 하여 사용자 경험을 개선하고, 로그인 과정이나 셀프 서비스 비밀번호 재설정(SSPR) 중 발생할 수 있는 **불필요한 중단을 최소화**할 수 있습니다.
+
+MFA 등록 정책을 사용할 때의 사용자 경험에 대해 유의해야 합니다.이 정책이 적용되면 사용자는 **다음 번 인터랙티브 로그인 시점에 MFA 등록 요청**을 받게 되며, **등록을 완료할 수 있는 14일의 유예 기간**이 부여됩니다.
+
+이 14일 동안 MFA가 조건으로 요구되지 않는 경우, 사용자는 **등록을 건너뛸 수 있습니다(bypass)**.그러나 **14일이 지나면 등록을 완료해야만 로그인 절차를 마칠 수 있습니다.**
+
+*Ref: [User experiences withMFA registration policy](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-user-experience#multifactor-authentication-registration)*
+
+
+
+
+
+
+
+
+
+
+
+### Identity threat detection and response (ITDR)
+
+ITDR(Identity Threat Detection and Response)은 **ID 기반 위협을 예방·탐지·대응**하는 데 초점을 둡니다.이러한 위협은 종종 피싱과 같은 **자격 증명 탈취**에서 시작되지만, 최근에는 **ID 인프라의 취약점**을 직접 노리는 공격이 증가하고 있습니다.
+
+보안 운영센터(SOC) 팀은 더 나은 가시성을 확보하기 위해 **ID 신호(identity signals)**를 XDR 플랫폼에 통합하여 **정체성 기반 보안 전략을 강화**하고 있습니다.
+
+
+
+ITDR 보안은 **AI와 UEBA**를 활용해 사용자 활동을 모니터링하고, 정상 패턴에서 벗어난 행동을 식별하며, 사이버 위협을 탐지하는 방식으로 이루어집니다.위협이 감지되면 **자동화된 대응, 경고, 사전 정의된 프로토콜**을 통해 신속하게 공격을 완화할 수 있습니다.
+
+조직은 계속 진화하는 위협에 대응하기 위해 **정체성(Identity) 보안 태세를 지속적으로 강화하고 업데이트**해야 합니다.
+
+Identity’s ITDR 대시보드를 사용하기 위해서는 다음 조건을 충족해야 합니다:
+
+- **Microsoft Defender for Identity** 라이선스와 **Entra ID Identity Protection** 라이선스 보유
+- 최소 **Security Reader** 권한을 가진 사용자 역할
+- 전체 권장 작업 목록과 모든 추천 액션 링크를 보려면**Global Administrator** 역할 필요
+
+대시보드에 접근하려면 **Microsoft 365 Defender**에 로그인한 후**Identities → Dashboard**를 선택하세요.
+
+> [!Note]
+>  
+> 고객과 더 깊이 논의해야 하는 경우에는 ID Protection 모듈을 참고하세요.
 
 ---
 
 ## Advanced filtering
+
+### Filter for Devices
+
+디바이스 필터(Filter for devices)를 조건으로 사용하면, 지원되는 연산자와 디바이스 속성을 활용하여 환경 내 특정 디바이스를 **타깃팅하거나 제외**할 수 있습니다.필터 규칙의 최대 길이는 **3072자**입니다.
+
+일반적으로 디바이스 필터 조건을 활용할 수 있는 대표적인 시나리오를 언급해 주세요.
+
+*Ref: [Filter for devices as a condition](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices)*
+
+*Ref: [Supported operators and device properties for filters](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#supported-operators-and-device-properties-for-filters)*
+
+*Ref: [common scenarios](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#common-scenarios)*
+
+
+
+
+
+
+
+
+
+
+
 
 ## Browser Session Control
 
