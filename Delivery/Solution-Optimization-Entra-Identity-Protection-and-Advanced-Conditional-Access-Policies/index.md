@@ -383,3 +383,11 @@ SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicie
 > [!NOTE]
 >
 > [VBD Delivery Guidance](VBD-Delivery-Guidance)
+
+## More Reference
+
+[Ref - Microsoft Entra ID Protection - **Risk Detections**](Ref-Microsoft-Entra-ID-Protection-Risk-Detections)
+
+[Ref - Risk-based access policies](Ref-Risk-based-access-policies)
+
+[Ref - Protect agent identities with Microsoft Entra](Ref-Protect-agent-identities-with-Microsoft-Entra.md)

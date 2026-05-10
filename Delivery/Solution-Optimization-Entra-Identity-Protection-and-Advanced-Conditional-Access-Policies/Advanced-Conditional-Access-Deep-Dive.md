@@ -742,7 +742,7 @@ Microsoft Entra ID P2 라이선스를 보유한 조직은 Microsoft Entra ID Pro
 
 *Ref: [Migrate ID Protection risk policies to Conditional Access](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#migrate-id-protection-risk-policies-to-conditional-access)*
 
-
+위험(Risk)은 사용자 수준과 로그인(Sign-in) 수준에서 모두 감지될 수 있습니다.
 
 
 
