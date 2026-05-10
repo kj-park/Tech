@@ -516,9 +516,11 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
 
         ```powershell
         
-        Install-Module Microsoft.Graph -Scope AllUsers
-        
+        Install-Module Microsoft.Graph -Scope AllUsers        
         Install-Module Microsoft.Graph.Beta -Scope AllUsers
+
+        Import-Module Microsoft.Graph
+        Import-Module Microsoft.Graph.Beta
         
         Connect-MgGraph -Scopes "Directory.ReadWrite.All"
         
@@ -532,33 +534,66 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
         
         ```powershell
         
-        Get-MgBetaDirectorySettingTemplate
+        Get-MgBetaDirectorySettingTemplate | Format-Table DisplayName, Id, Values
         
-        $grpUnifiedSetting = (Get-MgBetaDirectorySettingTemplate | where -Property DisplayName -Value "Group.Unified" -EQ)
+        $grpUnifiedSetting = (Get-MgBetaDirectorySetting | where -Property DisplayName -Value "Group.Unified" -EQ)
         
         $Setting = $grpUnifiedSetting
         
-        $grpUnifiedSetting.Values
-
+        $grpUnifiedSetting.Values | Format-Table Name, Type, DefaultValue, Description
         
         ```
         
-        **비어 있는 경우 새 그룹 설정을 생성합니다**
+        **그룹 설정이 비어 있으면 새로 생성하고 그룹 설정의 "EnableMIPLabels"를 설정합니다**
         
         *Ref: [create new group settings](https://learn.microsoft.com/en-us/entra/identity/users/groups-settings-cmdlets)*
 
 
         ```powershell
                 
-        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
+        # Create new DirectorySetting
+
+        $TemplateId = (Get-MgBetaDirectorySettingTemplate | where { $_.DisplayName -eq "Group.Unified" }).Id
+        $Template = Get-MgBetaDirectorySettingTemplate | where -Property Id -Value $TemplateId -EQ
         
+        $params = @{
+           templateId = "$TemplateId"
+           values = @(
+              @{
+                 name = "EnableMIPLabels"
+                 value = "True"
+              }
+           )
+        }
+
+        New-MgBetaDirectorySetting -BodyParameter $params
+        
+        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
+        $Setting.Values
+      
+        ```
+
+        **다시 확인해 보세요. 이제 그룹 설정을 사용할 수 있어야 합니다.**
+
+        ```powershell
+
+        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}        
+        $Setting.Values
+
+        ```
+
+        *Ref: Update settings at the directory level*
+
+        ```powershell
+
+        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
         $Setting.Values
         
         $params = @{
            Values = @(
               @{
-                 Name = "EnableMIPLabels"
-                 Value = "True"
+                 Name = "UsageGuidelinesUrl"
+                 Value = ""
               }
            )
         }
@@ -566,42 +601,121 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
         Update-MgBetaDirectorySetting -DirectorySettingId $Setting.Id -BodyParameter $params
         
         ```
-
-        **다시 확인해 보세요. 이제 그룹 설정을 사용할 수 있어야 합니다.**
-
-        ```powershell
-
-        $Setting = Get-MgBetaDirectorySetting | where { $_.DisplayName -eq "Group.Unified"}
         
-        $Setting.Values
 
-        ```
 
     1. 이제 민감도 레이블을 Microsoft Entra ID와 동기화해야 합니다. 먼저 Security & Compliance PowerShell에 연결하세요.
 
         *Ref: [Connect to Security & Compliance PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-scc-powershell?view=exchange-ps)*
 
+        ```powershell
+        
+        Import-Module ExchangeOnlineManagement
+        
+        # IT must be version 3.x
+        
+        Get-InstalledModule ExchangeOnlineManagement | Format-List Name,Version
+        
+        Connect-IPPSSession -UserPrincipalName "UserPrincipalName of a Global Admin"
+        
+        ```
+        
+    1. 그런 다음 다음 명령을 실행하여 민감도 레이블을 Microsoft 365 그룹에서 사용할 수 있도록 설정하세요.
+        
+        ```powershell
+        
+        Execute-AzureAdLabelSync
+        
+        ```
 
 ###### Create or edit a sensitivity label
 
+1. Create sensitivity label - Groups & Sites
 
+    ![Create sensitivity label - Groups & Sites](image-25.png)
 
+1. **"External sharing and Conditional Access"**을 선택하세요.
 
+    ![Create sensitivity label - Groups & Sites: External sharing and Conditional Access](image-26.png)
 
+1. **"Use Entra Conditional Access to protect labeled SharePoint sites"**을 선택한 다음 적용하려는 인증 컨텍스트(Authentication Context)를 선택하세요.
 
+    > [!NOTE]
+    >
+    > **Authentication Context**는 생성되어 있어야 합니다.
+    
+    ![alt text](image-27.png)
+    
+    절차를 완료한 후 민감도 레이블을 게시(publish)하세요.
 
+    *Ref: [Publish sensitivity labels by creating a label policy](https://learn.microsoft.com/en-us/purview/create-sensitivity-labels?tabs=classic-label-scheme#publish-sensitivity-labels-by-creating-a-label-policy)
 
+    > [!NOTE]
+    >
+    > For modern label scheme
+    >
+    > *Ref: [Migrate parent sensitivity labels to label groups](https://learn.microsoft.com/en-us/purview/migrate-sensitivity-label-scheme)
+
+1. 새로운 SharePoint 사이트를 만들거나 기존 사이트를 수정한 뒤, 민감도 레이블을 적용하세요:
+
+    ![SOP Team Site - applying Sensitivity Label](image-28.png)
+
+>TODO: Design 팀의 레이블 적용 후 그 그림으로 교체!
 
 ###### Test access
 
+SharePoint 사이트 "Business Critical"에 연결된 CA 정책은 SMS 및 음성 통화를 유효한 MFA 방식으로 인정하지 않는 인증 강도를 요구하고 있습니다.
 
+![CAP - Authentication context, authentication strength](image-29.png)
 
+SMS 또는 음성 통화를 사용하여 인증하세요
 
+![MFA - using SMS](image-30.png)
 
+SharePoint 사이트 "Design"(또는 이 테스트를 위해 생성하고 민감도 레이블을 적용한 다른 사이트)에 접근을 테스트해보세요.
 
+자동으로 로그인할 수 없을 것입니다.
 
+인증 강도에 포함된 허용된 인증 방법 중 하나를 구성해두었다면, 해당 방법을 사용하여 인증하라는 요청을 받게 됩니다.
 
+이 예시에서는 인증 강도에 Authenticator 앱이 포함되어 있고, 사용자가 Authenticator 앱을 이미 설정해둔 상태입니다.
 
+따라서 사용자는 승인된 MFA 방식인 Authenticator 앱을 통해 인증 요청을 받게 됩니다.
+
+![Approve sign](image-31.png)
+
+올바른 MFA 방식으로 인증을 완료하면 정상적으로 로그인됩니다.
+
+#### Custom application integrated in Entra ID
+
+인증에 OpenID Connect / OAuth 2.0을 사용하는 모든 앱은, 조직에서 개발한 앱을 포함하여, 인증 컨텍스트 값을 사용할 수 있습니다.
+
+이를 통해 고가치 트랜잭션이나 직원 개인정보 조회와 같은 민감한 리소스를 더욱 안전하게 보호할 수 있습니다.
+
+Reference: [Developer guidance for Microsoft Entra Conditional Access authentication context](https://learn.microsoft.com/en-us/entra/identity-platform/developer-guide-conditional-access-authentication-context)
+
+Code sample: [Use the Conditional Access auth context to perform step-up authentication](https://github.com/Azure-Samples/ms-identity-ca-auth-context/blob/main/README.md)
+
+---
+
+## External Multifactor Authentication
+
+외부 다단계 인증(MFA)은 이전에 외부 인증 방법으로 불렸으며, 사용자가 업무용 또는 학교 계정으로 로그인할 때 MFA 요구 사항을 충족하기 위해 외부 제공자를 선택할 수 있도록 합니다.
+Microsoft Entra ID는 계속해서 정책 평가와 액세스 결정을 담당하는 ID 제어 plane 역할을 수행합니다.
+
+외부 MFA는 조건부 액세스 정책, Microsoft Entra ID Protection 기반 위험 조건부 액세스 정책, Privileged Identity Management(PIM) 활성화, 그리고 애플리케이션 자체가 MFA를 요구하는 경우에도 MFA 요구 사항을 충족합니다.
+
+또한 외부 MFA를 사용하려면 최소 Microsoft Entra ID P1 라이선스가 필요합니다.
+
+외부 MFA는 페더레이션과 다릅니다.
+
+외부 MFA에서는 사용자 ID가 Microsoft Entra ID에서 생성되고 관리되지만,
+
+페더레이션에서는 사용자 ID가 외부 ID 공급자에서 관리됩니다.
+
+![External Multifactor Authentication](image-32.png)
+
+[steps to Create an External MFA](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-external-method-manage#create-an-eam-in-the-admin-center)에 대하여 설명합니다.
 
 
 ## Appendix
