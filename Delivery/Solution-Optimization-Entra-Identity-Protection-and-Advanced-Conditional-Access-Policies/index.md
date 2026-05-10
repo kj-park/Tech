@@ -391,3 +391,5 @@ SigninLogs | where TimeGenerated >= ago(1d) | mv-expand ConditionalAccessPolicie
 [Ref - Risk-based access policies](Ref-Risk-based-access-policies)
 
 [Ref - Protect agent identities with Microsoft Entra](Ref-Protect-agent-identities-with-Microsoft-Entra.md)
+
+[Conditional Access – Filter for Devices](Ref-Conditional-Access-Filter-for-devices)
