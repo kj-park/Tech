@@ -798,8 +798,69 @@ Microsoft Entra ID P2 라이선스를 보유한 조직은 Microsoft Entra ID Pro
 
 #### User risk policy
 
+사용자 위험(User Risk)을 기반으로 액세스 제어를 적용할 수 있는 주요 옵션은 다음 세 가지입니다.
+
+- **위험 완화 요구(미리 보기):** ID Protection이 모든 인증 방법에 대해 적절한 위험 완화 절차를 자동으로 처리합니다.
+
+- **비밀번호 변경 요구:** 사용자가 안전한 비밀번호 변경을 완료할 때까지 ID Protection이 액세스를 차단합니다.
+
+- **액세스 차단:** 위험이 해결될 때까지 ID Protection이 사용자의 액세스를 차단합니다.
+
+**[Require Risk Remediation](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#require-risk-remediation-with-microsoft-managed-remediation-preview)**(위험 완화 요구)를 사용할 때의 장점과 현재 제한 사항 및 특별 고려 사항은 다음과 같습니다.
+
+- Require authentication strength와 Sign-in frequency(매번 요구)는 다음 두 가지 이유로 정책에 자동 적용됩니다.
+
+    - 세션이 취소된 후 사용자가 다시 인증하도록 안내해야 합니다.
+    
+    - 인증 강도를 요구하면 비밀번호 기반 사용자와 패스워드리스 사용자 모두가 정책의 적용 대상이 되도록 보장할 수 있습니다.
+
+- Microsoft Entra ID는 외부 사용자와 게스트 사용자에 대한 세션 취소(Session Revocation)를 지원하지 않기 때문에, 이 사용자들은 보안 비밀번호 재설정(Secure Password Reset)을 통해 계속해서 스스로 위험을 완화해야 합니다.
+
+> [!TIP]
+> **Require Remediation: How It Works**
+>
+> 조건부 액세스(Conditional Access)에서 관리자는 비밀번호 기반과 패스워드리스 방식을 포함한 모든 인증 방법을 지원하는 사용자 위험(User Risk) 정책을 구성할 수 있습니다. 이는 정책의 Grant Controls에서 **“Require risk remediation(위험 완화 요구)”**를 선택하면, Microsoft Entra ID Protection이 감지된 위협과 사용자의 인증 방식에 따라 적절한 위험 완화 절차를 자동으로 처리한다는 의미입니다. 그 동작 논리는 다음과 같습니다.
+>
+> Path 1 – 비밀번호 기반 인증:  
+> 사용자가 유출된 자격 증명, 패스워드 스프레이 공격, 또는 손상된 비밀번호가 사용된 세션 기록과 같은 활성 위험 감지 항목을 가진 위험 사용자일 경우, 사용자에게 보안 비밀번호 변경을 수행하라는 요청이 표시됩니다. 사용자가 비밀번호 변경을 완료하면, 이전 세션은 모두 취소됩니다.
+>
+> Path 2 – 패스워드리스 인증:  
+> 사용자가 위험 사용자로 분류되어 활성 위험 감지 항목이 있지만, 그 위험이 손상된 비밀번호와 관련되지 않은 경우입니다. 가능한 위험 감지에는 비정상적인 토큰, 불가능한 이동(불가능한 위치 이동), 익숙하지 않은 로그인 속성 등이 포함됩니다. 이 경우 사용자의 세션이 취소되며, 사용자는 다시 로그인하라는 요청을 받게 됩니다.
+
+![Require Risk Remediation](image-34.png)
+
+*Ref: [Require Risk Remediation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-grant#require-risk-remediation)
 
 #### Sign-in risk policy
+
+Sign-in Risk 수준이 Medium 또는 High일 때는 Microsoft Entra 다단계 인증(MFA)을 요구하거나, 가능한 사용자에게는 Passwordless MFA 또는 피싱 저항 MFA를 요구하는 것이 좋습니다.
+
+위험 수준이 낮은(Low) 상태에서 액세스 제어를 요구하면 사용자 중단(User Interrupt)이 증가하게 됩니다. 또한, 보안 비밀번호 변경(Secure Password Change)이나 MFA 인증과 같은 자가 위험 완화(Self-remediation) 옵션을 허용하지 않고 액세스를 차단(Block access)하도록 설정하면 사용자와 관리자 모두에게 더 큰 영향을 줄 수 있습니다.
+따라서 정책을 구성할 때 이러한 선택이 가져올 영향을 신중하게 고려해야 합니다.
+
+> [!NOTE]
+>
+> Sign-in Risk 기반 정책은 사용자가 위험한 세션에서 MFA를 등록하지 못하도록 보호합니다.
+>
+> 사용자가 MFA에 등록되어 있지 않은 상태에서 위험한 로그인이 발생하면 해당 로그인은 차단되며, 사용자는 AADSTS53004 오류를 보게 됩니다.
+
+Risk-based 정책을 사용할 때의 또 다른 장점은, 사용자가 로그인 위험(Sign-in Risk)과 사용자 위험(User Risk)을 스스로 완화(Self-remediate)할 수 있다는 점입니다.
+
+*Ref: [self-remediate their sign-in risks and user risks](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#self-remediation-with-risk-based-policy)*
+
+이를 위해 사용자는 반드시 Self-Service Password Reset(SSPR)에 등록되어 있어야 합니다.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Microsoft Entra multifactor authentication registration policy
