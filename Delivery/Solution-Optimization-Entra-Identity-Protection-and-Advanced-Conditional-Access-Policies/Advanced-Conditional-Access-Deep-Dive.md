@@ -658,9 +658,7 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
 
 1. 새로운 SharePoint 사이트를 만들거나 기존 사이트를 수정한 뒤, 민감도 레이블을 적용하세요:
 
-    ![SOP Team Site - applying Sensitivity Label](image-28.png)
-
->TODO: Design 팀의 레이블 적용 후 그 그림으로 교체!
+    ![SOP Team Site - applying Sensitivity Label](image-35.png)
 
 ###### Test access
 
