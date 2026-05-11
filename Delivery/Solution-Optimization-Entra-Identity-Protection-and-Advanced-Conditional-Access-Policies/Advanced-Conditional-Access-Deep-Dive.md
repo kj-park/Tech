@@ -922,8 +922,143 @@ Identity’s ITDR 대시보드를 사용하기 위해서는 다음 조건을 충
 
 *Ref: [common scenarios](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#common-scenarios)*
 
+> [!TIP]
+>
+> Microsoft Entra ID에 등록되지 않은 디바이스의 경우, 모든 디바이스 속성은 null 값으로 간주되며, 디바이스가 디렉터리에 존재하지 않기 때문에 해당 속성을 확인할 수 없습니다.
+>
+> 등록되지 않은 디바이스를 정책 대상으로 지정하려면 부정 연산자(negative operator)를 사용하는 것이 가장 효과적입니다. 이렇게 하면 구성한 필터 규칙이 적용됩니다.
+>
+> 반대로 긍정 연산자(positive operator)를 사용할 경우, 필터 규칙은 디렉터리에 디바이스가 실제로 존재하고 해당 속성이 규칙과 일치할 때만 적용됩니다.
 
+#### Device Filter - Common Scenarios
 
+- 🟦 특권 리소스(Privileged resources) 접근 제한
+
+    (예: SAW — Secure Admin Workstation)
+    
+    조직은 **특권 역할을 가진 사용자**가**특정 조건을 충족한 디바이스에서만** 민감한 리소스에 접근하도록 제한할 수 있습니다.
+    
+    - ✔ 시나리오 조건
+    
+        특권 리소스(예: Windows Azure Service Management API)에 접근하려는 사용자가 다음을 충족해야 함:
+        
+        - 특권 역할이 할당된 사용자
+        - MFA 완료 사용자
+        - SAW(보안 관리자 워크스테이션) 등 **특권 디바이스이며, 규정 준수(compliant)** 상태인 디바이스
+    
+    - ✔ 구현 방식
+    
+        이 시나리오는 **두 개의 정책**으로 구성됩니다.
+        
+        - 🔹 Policy 1 — 허용 정책
+        
+            - 대상: 관리자 역할 사용자
+            - 리소스: Windows Azure Service Management API
+            - 조건: MFA 요구 + 디바이스 규정 준수 요구
+            - 결과: 접근 허용
+        
+        - 🔹 Policy 2 — 차단 정책
+        
+            - 대상: 관리자 역할 사용자
+            - 조건: **특정 디바이스(SAW)만 제외하고 모두 차단**
+            - 필터 규칙: `device.extensionAttribute1 equals SAW`
+            - 결과: SAW 디바이스가 아닌 경우 차단
+
+- 🟩 지원되지 않는 OS(Old OS)에서의 접근 차단
+
+    조직은 **구형 운영체제(예: Windows 10 미만)** 를 사용하는 디바이스에서조직 리소스에 접근하는 것을 차단할 수 있습니다.
+
+    - ✔ 시나리오 조건
+    
+        - Windows OS 버전이 Windows 10(10.0)보다 낮은 경우 차단
+    
+    - ✔ 구현 방식
+    
+        - 모든 사용자 + 모든 리소스 대상으로 정책 생성
+        - 단, 다음 조건을 만족하는 디바이스는 제외
+        
+            - `device.operatingSystem == 'Windows'`
+            - `device.operatingSystemVersion startsWith '10.0'`
+        - 그 외 모든 디바이스는 차단
+        
+        즉, **Windows 10 이상만 허용**, 나머지는 모두 차단하는 정책입니다.
+
+- 🟧 특정 계정이 특정 디바이스에서 MFA를 요구하지 않도록 설정
+
+    (예: Teams Phone, Surface Hub 등 서비스 계정)
+    
+    일부 서비스 계정은 자동화된 장비(Teams Phone, Surface Hub 등)에서 사용되므로MFA를 요구하면 정상 동작이 어려울 수 있습니다.
+    
+    - ✔ 시나리오 조건
+    
+        - 서비스 계정이 특정 디바이스에서 로그인할 때는 MFA를 요구하지 않음
+    
+    - ✔ 구현 방식
+    
+        이 시나리오도 **두 개의 정책**으로 구성됩니다.
+        
+        - 🔹 Policy 1 — 일반 사용자에게는 MFA 요구
+        
+            - 대상: 모든 사용자
+            - 제외: 서비스 계정
+            - 결과: MFA 요구
+        
+        - 🔹 Policy 2 — 서비스 계정 전용 정책
+        
+            - 대상: 서비스 계정 그룹
+            - 디바이스 필터:
+        
+                - `device.extensionAttribute2 not equals TeamsPhoneDevice`
+            - 결과: 필터에 해당하지 않는 디바이스(즉, Teams Phone 디바이스)에서는 MFA 요구하지 않음
+
+### Filter for Applications
+
+기본적으로, 테넌트에 등록된 앱 목록에서 **개별 애플리케이션**을 선택하거나,정책을 모든 애플리케이션에 적용하기 위해 **“모든 클라우드 앱(All cloud apps)”** 옵션을 사용할 수 있습니다.
+
+그러나 이러한 방식에는 다음과 같은 **제한 사항**이 있습니다:
+
+- 하나의 정책에서 선택할 수 있는 애플리케이션은 **최대 50개**입니다.
+- 애플리케이션을 추가하거나 제거할 때마다 **정책을 수동으로 업데이트**해야 합니다.
+- Microsoft 365 앱과 같은 동일한 카테고리 내에서도,**서브셋별로 서로 다른 정책을 적용할 수 없습니다.**
+
+이러한 제한을 해결하기 위해 앱 필터(filters for apps)를 사용할 수 있습니다.
+이 기능을 사용하면 개별 앱을 직접 선택하는 대신, 애플리케이션에 **사용자 지정 보안 속성(custom security attributes)**을 태그로 지정하고, 해당 태그를 기반으로 조건부 액세스 정책을 적용할 수 있습니다.
+
+*Ref: [filters for apps](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-filter-for-applications)
+
+> [!INFO]
+>
+> ###### **커스텀 보안 속성(Custom Security Attributes)**
+> 
+> - 조직이 직접 정의하는 문자열 기반 속성입니다 .
+> - 예:
+> 
+>     - `policyRequirement = requireMFA`
+>     - `policyRequirement = blockGuestUsers`
+> 
+> 이 속성을 앱(Service Principal)에 부여하면,Conditional Access 정책에서 “이 속성이 있는 앱만” 대상으로 지정할 수 있습니다.
+> 
+> 애플리케이션 필터는 **정책 구성 시점이 아니라, 토큰 발급 시점(runtime)**에 평가됩니다 .즉, 앱의 속성이 변경되면 정책을 다시 만들 필요 없이 즉시 반영됩니다.
+> 
+> ###### 역할(Role) 할당
+> 
+> 커스텀 보안 속성은 보안 민감한 기능이므로,다음 역할 중 하나가 있어야 관리할 수 있습니다:
+> 
+> - **Attribute Assignment Administrator**
+> - **Attribute Definition Administrator**
+> - **Reader 역할들**
+> 
+> 중요한 점은, **Global Administrator도 기본적으로 이 속성을 읽거나 만들 권한이 없다**는 것입니다
+
+이 방식을 사용하면 정책에 포함되는 애플리케이션 수에 **제한이 없으며**,해당 속성을 가진 새 애플리케이션을 추가할 경우 **자동으로 정책에 포함**됩니다.
+
+또한 동일한 속성을 공유하는 애플리케이션 그룹(예: **“Marketing apps”**, **“HR apps”**)에 대해더 세분화된 정책을 만들 수 있으며, 다음과 같은 **공통 액세스 시나리오**에도 적용할 수 있습니다:
+
+- 특정 애플리케이션에 대한 **외부 사용자 접근 차단**
+- **규정 준수 디바이스(compliant device)** 또는 Intune 앱 보호 정책 요구
+- 특정 애플리케이션에 대해 **로그인 빈도(Sign-in frequency)** 제어 적용
+- 특정 애플리케이션에 **Privileged Access Workstation(PAW)** 사용 요구
+- **고위험 사용자(high-risk users)** 및 특정 애플리케이션에 대해 **세션 제어(Session controls)** 적용
 
 
 
