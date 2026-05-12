@@ -425,7 +425,7 @@ Authentication Context를 적용할 수 있는 일반적인 시나리오를 설�
 
     ***Ref: MFA - SMS인증으로 로그인하는 과정***
 
-1. PIM을 사용하여 역할을 활성화하십시오. 이때 Conditional Access 정책을 충족해야 합니다. 이 예시에서는 SMS가 인증 강도에 포함되지 않았기 때문에 Microsoft Authenticator를 사용해 MFA를 완료해야 합니다. 
+1. PIM을 사용하여 역할을 활성화하십시오. 이때 Conditional Access 정책을 충족해야 합니다. 이 예시에서는 SMS가 인증 강도에 포함되지 않았기 때문에 Microsoft Authenticator를 사용해 MFA를 완료해야 합니다.
 
     ![Azure PIM - My roles](image-22.png)
 
@@ -433,9 +433,9 @@ Authentication Context를 적용할 수 있는 일반적인 시나리오를 설�
 
     ![Entra ID PIM - My roles](image-23.png)
 
-    ![Verify your identity](image-19.png)
+    ![Verify your identity](image-37.png)
 
-    >TODO: 위 그림과 같이 되지 않고 아래 그림과 같이 실패함. 원인 파악 필요. 
+    실패한 구성의 경우:
 
     ![alt text](image-20.png)
 
@@ -660,6 +660,16 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
 
     ![SOP Team Site - applying Sensitivity Label](image-35.png)
 
+
+**Label 구성 및 SPO 팀 사이트에 label 할당:**
+
+![Label configuration and assign the label to SPO site](image-38.png)
+
+**Conditional Access 정책 구성:**
+
+![CAP configuration for SPO with authentication context](image-39.png)
+
+
 ###### Test access
 
 SharePoint 사이트 "Business Critical"에 연결된 CA 정책은 SMS 및 음성 통화를 유효한 MFA 방식으로 인정하지 않는 인증 강도를 요구하고 있습니다.
@@ -683,6 +693,12 @@ SharePoint 사이트 "Design"(또는 이 테스트를 위해 생성하고 민감
 ![Approve sign](image-31.png)
 
 올바른 MFA 방식으로 인증을 완료하면 정상적으로 로그인됩니다.
+
+![Verify your identity](image-28.png)
+
+잘못 구성된 테스트:
+
+![More information required](image-36.png)
 
 #### Custom application integrated in Entra ID
 
@@ -872,16 +888,6 @@ MFA 등록 정책을 사용할 때의 사용자 경험에 대해 유의해야 �
 
 *Ref: [User experiences withMFA registration policy](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-user-experience#multifactor-authentication-registration)*
 
-
-
-
-
-
-
-
-
-
-
 ### Identity threat detection and response (ITDR)
 
 ITDR(Identity Threat Detection and Response)은 **ID 기반 위협을 예방·탐지·대응**하는 데 초점을 둡니다.이러한 위협은 종종 피싱과 같은 **자격 증명 탈취**에서 시작되지만, 최근에는 **ID 인프라의 취약점**을 직접 노리는 공격이 증가하고 있습니다.
@@ -1060,6 +1066,9 @@ Identity’s ITDR 대시보드를 사용하기 위해서는 다음 조건을 충
 - 특정 애플리케이션에 **Privileged Access Workstation(PAW)** 사용 요구
 - **고위험 사용자(high-risk users)** 및 특정 애플리케이션에 대해 **세션 제어(Session controls)** 적용
 
+#### Possible demo or case study
+
+랩 환경에서 다음 시나리오를 테스트하거나 데모해볼 수 있습니다: 엔지니어링 팀이 중요한 애플리케이션에 접근할 때, 승인된 인증 방법(인증 강도 사용)으로 인증한 경우에만 또는 특정 네트워크 위치에서만 접근하도록 요구하는 시나리오.
 
 
 
