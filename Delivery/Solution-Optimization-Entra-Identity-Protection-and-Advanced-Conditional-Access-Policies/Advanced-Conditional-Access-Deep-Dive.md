@@ -1070,9 +1070,86 @@ Identity’s ITDR 대시보드를 사용하기 위해서는 다음 조건을 충
 
 랩 환경에서 다음 시나리오를 테스트하거나 데모해볼 수 있습니다: 엔지니어링 팀이 중요한 애플리케이션에 접근할 때, 승인된 인증 방법(인증 강도 사용)으로 인증한 경우에만 또는 특정 네트워크 위치에서만 접근하도록 요구하는 시나리오.
 
+#### Create custom security attributes
+
+Custom security attributes은 보안에 민감하며, 위임된 사용자만 관리할 수 있습니다. 이러한 속성을 관리할 사용자에게 다음 역할 중 하나를 할당하세요.
+
+| Role name | Description |
+| --- | --- |
+| [Attribute Assignment Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#attribute-assignment-administrator) | Assign custom security attribute keys and values to supported Microsoft Entra objects. |
+| [Attribute Assignment Reader](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#attribute-assignment-reader) | Read custom security attribute keys and values for supported Microsoft Entra objects. |
+| [Attribute Definition Administrator](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#attribute-definition-administrator) | Define and manage the definition of custom security attributes. |
+| [Attribute Definition Reader](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#attribute-definition-reader) | Read the definition of custom security attributes. |
+
+Microsoft Entra ID에서 사용자 지정 보안 속성을 추가하거나 비활성화하는 방법에 대한 문서의 지침을 따라, 아래의 속성 집합(Attribute set)과 새 속성(New attributes)을 추가하세요.
+
+*Ref: [Add or deactivate custom security attributes in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add)*
+
+1. "Engineering" 이름의 Attribute set을 생성합니다.
+
+    *Ref: [Add an attribute set](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-an-attribute-set)*
 
 
+    > [!NOTE]
+    >
+    > 속성 집합은 이름을 변경하거나 삭제할 수 없습니다.
 
+1. "EngAppsPolicyRequirements"라는 이름의 새 속성을 생성하고, 여러 값을 할당할 수 있도록 허용(**Allow multiple values to be assigned**)하며 미리 정의된 값만 할당(**Only allow predefined values to be assigned**)할 수 있도록 제한합니다.
+
+    추가할 미리 정의된 값은 다음과 같습니다:
+    
+    - blockGuest
+    - requireMFA
+    - requirePAW
+    - requireAuthnStrength
+    
+    *Ref: [Add a custom security attribute definition](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-a-custom-security-attribute-definition)*
+    
+    ![Add a custom security attribute definition](image-40.png)
+    
+    > [!NOTE]
+    >
+    > 사용자 지정 보안 속성(Custom Security Attributes)은 Boolean 데이터 유형 생성을 지원하지만, 조건부 액세스 정책(Conditional Access Policy)은 **문자열(string)**만 지원합니다.
+    
+
+    속성 집합(Attribute Sets)과 사용자 지정 보안 속성(Custom Security Attributes)은 PowerShell 또는 MS Graph를 사용하여 관리할 수도 있습니다.
+
+    *Ref: [**PowerShell or MS Graph**](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#powershell-or-microsoft-graph-api)*
+
+#### Conditional Access Policy
+
+사용자 지정 인증 강도([custom authentication strength](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#custom-authentication-strengths))를 생성하고, 예를 들어 "Admin Approved Authentication Methods"와 같은 이름을 지정합니다.
+
+SMS는 포함하지 않습니다.
+
+이제 조건부 액세스 정책을 생성합니다:
+
+- 조건부 액세스 정책을 테스트 사용자에게 할당합니다.
+
+- 대상 리소스(Target resources)에서 다음 옵션을 선택합니다:
+
+    - "**Select what this policy appies to**"에서 "**Resource (formerly cloud apps)**"를 선택합니다.
+    - "**Include**"에서 "**Select resources**" > "**Select resources based on attributes**"를 선택하고, **Edit filter**에서 **Configure**를 **Yes**로 설정합니다.
+    - 이전에 생성한 EngAppsPolicyRequirements 속성을 선택합니다.
+    - Operator를 Contains로 설정하고, Value를 requireAuthenticationStrength로 지정합니다.
+
+    ![CPA - Define the target resources with app filtering](image-41.png)
+
+- Access controls > Grant에서 **Grant access**를 선택하고, **Require authentication strength**를 선택한 뒤, 사용자 지정 인증 강도인 **"Admin Approved authn methods"**를 선택합니다.
+
+#### Assign custom security attributes to an application
+
+이미 service principal을 사용하는 테스트 애플리케이션이 있다면, 다음 단계를 건너뛸 수 있습니다.
+
+샘플 애플리케이션을 설정하려면 다음 중 하나를 수행할 수 있습니다:
+
+- 데모 애플리케이션인 **Microsoft Entra SAML Toolkit**을 추가하고 엔터프라이즈 애플리케이션에 대해 SSO(Single Sign-On)를 활성화하거나
+
+    [Enable single sign-on for an enterprise application](https://learn.microsoft.com/en-nz/entra/identity/enterprise-apps/add-application-portal-setup-sso)
+
+- 문서 *“Quickstart: Get a token and call the Microsoft Graph API by using a console app's identity”*의 지침을 따라 진행합니다.
+
+    [Quickstart: Get a token and call the Microsoft Graph API by using a console app's identity](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-v2-netcore-daemon)
 
 
 
