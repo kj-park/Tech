@@ -1279,7 +1279,7 @@ Microsoft Entra ID의 보호된 작업([**Protected actions**](https://learn.mic
 
 이 과정을 통해, 사용자가 보호된 작업을 수행할 때 Authentication Strength 요구 사항을 충족해야 한다는 점을 직접 확인할 수 있다.
 
-
+![The selected action is protected](image-48.png)
 
 
 
