@@ -3,7 +3,7 @@ layout: default
 title: [Advanced Conditional Access - Deep Drive]
 URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Advanced-Conditional-Access-Deep-Dive
 Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\IP-Advanced-Conditional-Access-Deep-Dive.md
-ms.date: 05/07/2026
+ms.date: 05/14/2026
 ---
 
 # Advanced Conditional Access - Deep Drive
@@ -1191,7 +1191,7 @@ MFA가 요청되면, 인증 강도 "Admin Approved authn methods"에 포함되�
 
 지시에 따라 인증을 완료하세요. 몇 분 후, 로그인 세부 정보에서 이전에 생성한 조건부 액세스 정책을 충족했음을 확인할 수 있습니다.
 
-![Sign-in log](image-46.png)
+![Sign-in log](image-47.png)
 
 > [!TIP]
 >
@@ -1219,6 +1219,67 @@ Microsoft Entra ID의 보호된 작업([**Protected actions**](https://learn.mic
 ***Ref: [device filters](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices)***
 
 ***Ref: [sign-in frequency session controls](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-session-lifetime#user-sign-in-frequency)***
+
+
+조건부 액세스 정책은 다음 영역의 **제한된 권한 집합(limited set of permissions)**에 적용될 수 있습니다:  
+
+- 조건부 액세스 정책 관리 
+- 테넌트 간 액세스 설정 관리 
+- 네트워크 위치를 정의하는 사용자 지정 규칙 
+- 보호된 작업(Protected action) 관리
+
+다음은 초기 권한 목록입니다. 보호된 작업과 함께 사용할 수 있는 권한은 무엇인가요?
+
+***Ref: [What permissions can be used with protected actions?](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/protected-actions-overview#what-permissions-can-be-used-with-protected-actions)***
+
+| 권한 | 설명 |
+| --- | --- |
+| microsoft.directory/conditionalAccessPolicies/basic/update | 조건부 액세스 정책의 기본 속성을 업데이트합니다. |
+| microsoft.directory/conditionalAccessPolicies/create | 조건부 액세스 정책을 생성합니다. |
+| microsoft.directory/conditionalAccessPolicies/delete | 조건부 액세스 정책을 삭제합니다. |
+| microsoft.directory/conditionalAccessPolicies/basic/update | 조건부 액세스 정책의 기본 속성을 업데이트합니다. |
+| microsoft.directory/conditionalAccessPolicies/create | 조건부 액세스 정책을 생성합니다. |
+| microsoft.directory/conditionalAccessPolicies/delete | 조건부 액세스 정책을 삭제합니다. |
+| microsoft.directory/crossTenantAccessPolicy/allowedCloudEndpoints/update | 테넌트 간 액세스 정책의 허용된 클라우드 엔드포인트를 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/default/b2bCollaboration/update | 기본 테넌트 간 액세스 정책의 Microsoft Entra B2B 협업 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/default/b2bDirectConnect/update | 기본 테넌트 간 액세스 정책의 Microsoft Entra B2B Direct Connect 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/default/crossCloudMeetings/update | 기본 테넌트 간 액세스 정책의 크로스 클라우드 Teams 회의 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/default/tenantRestrictions/update | 기본 테넌트 간 액세스 정책의 테넌트 제한 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/b2bCollaboration/update | 파트너용 테넌트 간 액세스 정책의 Microsoft Entra B2B 협업 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/b2bDirectConnect/update | 파트너용 테넌트 간 액세스 정책의 Microsoft Entra B2B Direct Connect 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/create | 파트너용 테넌트 간 액세스 정책을 생성합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/crossCloudMeetings/update | 파트너용 테넌트 간 액세스 정책의 크로스 클라우드 Teams 회의 설정을 업데이트합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/delete | 파트너용 테넌트 간 액세스 정책을 삭제합니다. |
+| microsoft.directory/crossTenantAccessPolicy/partners/tenantRestrictions/update | 파트너용 테넌트 간 액세스 정책의 테넌트 제한 설정을 업데이트합니다. |
+| microsoft.directory/deletedItems/delete | 복구할 수 없는 개체를 영구적으로 삭제합니다. |
+| microsoft.directory/namedLocations/basic/update | 네트워크 위치를 정의하는 사용자 지정 규칙의 기본 속성을 업데이트합니다. |
+| microsoft.directory/namedLocations/create | 네트워크 위치를 정의하는 사용자 지정 규칙을 생성합니다. |
+| microsoft.directory/namedLocations/delete | 네트워크 위치를 정의하는 사용자 지정 규칙을 삭제합니다. |
+| microsoft.directory/resourceNamespaces/resourceActions/authenticationContext/update | Microsoft 365 RBAC 리소스 작업의 조건부 액세스 인증 컨텍스트를 업데이트합니다. |
+
+보호된 작업(Protected actions)을 사용하려면 다음 단계를 수행해야 한다.
+
+1. **조건부 액세스 정책(CAP) 생성** 보호된 작업은 **조건부 액세스 인증 컨텍스트**를 사용하므로, 먼저 인증 컨텍스트를 구성한 뒤 이를 조건부 액세스 정책에 추가해야 한다.또한 이 CAP는 **테스트 사용자**에게 할당해야 하며, 해당 사용자는 최소한 Conditional Access Administrator 역할을 가지고 있어야 한다.
+
+1. **보호된 작업 추가** 조건부 액세스 인증 컨텍스트를 사용하여 하나 이상의 권한에 조건부 액세스 정책을 연결한다.
+
+    - 이를 위해 Entra 관리자 포털에서 **Identity > Roles & admins > Protected actions**로 이동한다.
+    - 이후 구성해 둔 **조건부 액세스 인증 컨텍스트(Conditional Access authentication context)**를 선택한다.
+    - 마지막으로 권한 목록에서 **조건부 액세스로 보호할 권한을 선택**한다.  
+        이 예에서는 Named Locations의 **업데이트, 생성, 삭제** 권한을 보호 대상으로 설정한다.
+
+        ![Protected Actions - update, create and delete of Named Locations](image-46.png)
+
+1. 사용자가 보호된 작업(Protected action)을 수행하면, 해당 작업을 실행하기 전에 조건부 액세스 정책 요구 사항을 충족해야 한다.사용자가 정책을 어떻게 충족하도록 안내받는지 이해하려면 **보호된 작업 테스트([Test a protected action](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/protected-actions-add#step-3-test-protected-actions))** 단계를 진행해보면 된다.
+
+이 예제에서는 사용자가 Named Location을 업데이트하거나 생성하기 전에, **이전에 만들어 둔 Authentication Strength(여기에는 SMS가 포함되지 않음)**을 충족해야 한다.
+
+- 테스트 사용자 계정으로 Entra Admin Portal 또는 Azure Portal에 로그인한다.MFA가 필요하다면, **SMS**를 사용해 인증한다.(SMS는 Authentication Strength에 포함되지 않은 방법이므로, 이후 보호된 작업을 수행할 때 다시 강한 인증을 요구받게 된다.)
+- 로그인 후 **Conditional Access**로 이동하여 새로운 **Named Location(IP 범위)**을 생성하려고 시도한다.
+
+이 과정을 통해, 사용자가 보호된 작업을 수행할 때 Authentication Strength 요구 사항을 충족해야 한다는 점을 직접 확인할 수 있다.
+
+
 
 
 
