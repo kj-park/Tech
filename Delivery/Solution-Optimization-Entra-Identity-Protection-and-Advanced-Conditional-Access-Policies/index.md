@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Solution Optimization - Entra Identity Protection and Advanced Conditional Access Policies]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/index.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/index
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\index.md
 ms.date: 05/06/2026
 ---
 

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Ref - Protect agent identities with Microsoft Entra]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Protect-agent-identities-with-Microsoft-Entra.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Protect-agent-identities-with-Microsoft-Entra
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\Ref-Protect-agent-identities-with-Microsoft-Entra.md
 ms.date: 05/07/2026
 ---
 

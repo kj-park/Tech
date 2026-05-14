@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Ref - Microsoft Entra ID Protection의 **Risk Detections**]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Microsoft-Entra-ID-Protection-Risk-Detections.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Microsoft-Entra-ID-Protection-Risk-Detections
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\Ref-Microsoft-Entra-ID-Protection-Risk-Detections.md
 ms.date: 05/10/2026
 ---
 

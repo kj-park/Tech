@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Conditional Access – Filter for Devices]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Conditional-Access-Filter-for-devices.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Conditional-Access-Filter-for-devices
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\Ref-Conditional-Access-Filter-for-devices.md
 ms.date: 05/11/2026
 ---
 

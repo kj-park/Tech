@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Ref - Risk-based access policies]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Risk-based-access-policies.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Ref-Risk-based-access-policies
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\Ref-Risk-based-access-policies.md
 ms.date: 05/10/2026
 ---
 

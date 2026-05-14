@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [Advanced Conditional Access - Deep Drive]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Advanced-Conditional-Access-Deep-Dive.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/Advanced-Conditional-Access-Deep-Dive
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\IP-Advanced-Conditional-Access-Deep-Dive.md
 ms.date: 05/07/2026
 ---
 
@@ -123,7 +124,7 @@ Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조�
 
 반면, 다른 인증 방법들은 Microsoft Entra 다단계 인증(MFA) 또는 SSPR을 사용할 때만 **보조 인증 요소(secondary factor)**로 사용할 수 있습니다.
 
-*Ref: [How each authentication method works](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods#how-each-authentication-method-works)*
+***Ref: [How each authentication method works](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods#how-each-authentication-method-works)***
 
 
 인증 방법은 활성화하고 필요 시 구성해야 합니다. 현재는 **MFA와 SSPR 인증 방법을 관리하는 두 개의 별도 포털**이 존재합니다([Legacy MFA and SSPR policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#legacy-mfa-and-sspr-policies)).
@@ -136,7 +137,7 @@ Microsoft Graph를 사용하면 환경의 다른 코드와 마찬가지로 조�
 
 따라서 고객은 이를 인지하고, 지금부터 **정책 간 마이그레이션 계획**을 수립해야 합니다.
 
-*Ref: [Migration between policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#migration-between-policies)*
+***Ref: [Migration between policies](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-methods-manage#migration-between-policies)***
 
 
 #### Advanced settings
@@ -147,17 +148,17 @@ Microsoft Entra 다단계 인증(MFA)의 최종 사용자 경험을 사용자 �
 
 이 기능을 활성화하면 사용자가 로그인 과정에서 **의심스러운 활동을 직접 신고**할 수 있습니다.
 
-*Ref: [Report suspicious activity](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity)*
+***Ref: [Report suspicious activity](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity)***
 
 사용자가 의심스러운 활동을 신고하면 해당 사용자는 **고위험 사용자(High-risk users)** 목록과 **차단 목록(Blocklist)**에 자동으로 추가됩니다.
 
-*Ref: [Report suspicious activity and fraud alert](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity-and-fraud-alert)*
+***Ref: [Report suspicious activity and fraud alert](https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-mfasettings?utm_source=copilot.com#report-suspicious-activity-and-fraud-alert)***
 
 **[시스템 선호 다단계 인증(System-preferred MFA)](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-system-preferred-multifactor-authentication?utm_source=copilot.com)**은 활성화할 수 있으며(기본값은 Microsoft 관리), 이를 통해 사용자에게 **가장 안전한 MFA 방법을 우선적으로 제시**할 수 있습니다.
 
 가장 안전한 인증 방법이 어떻게 결정되는지 이해하려면 다음 링크를 참고하세요
 
-*Ref: [How does system-preferred MFA determine the most secure method?](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-system-preferred-multifactor-authentication?utm_source=copilot.com#how-does-system-preferred-mfa-determine-the-most-secure-method)*
+***Ref: [How does system-preferred MFA determine the most secure method?](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-system-preferred-multifactor-authentication?utm_source=copilot.com#how-does-system-preferred-mfa-determine-the-most-secure-method)***
 
 ---
 
@@ -186,7 +187,7 @@ Report-only 정책을 포함하여 Conditional Access 정책의 영향을 파악
 
     정책 동작과 사용자 로그인 패턴을 시각적으로 분석하는 데 유용합니다.
 
-    *Ref: [How to use Microsoft Entra Workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks#sign-ins-by-conditional-access)*
+    ***Ref: [How to use Microsoft Entra Workbooks](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-use-azure-monitor-workbooks#sign-ins-by-conditional-access)***
 
     > [!NOTE]
     >
@@ -200,7 +201,7 @@ Report-only 정책을 포함하여 Conditional Access 정책의 영향을 파악
 
     각 로그인 이벤트에 대해 어떤 CA 정책이 적용되었는지, Report-only 결과는 무엇인지 확인할 수 있습니다.
 
-    *Ref: [Troubleshoot sign-in problems with Conditional Access](https://learn.microsoft.com/en-us/entra/identity/conditional-access/troubleshoot-conditional-access#policy-details)*
+    ***Ref: [Troubleshoot sign-in problems with Conditional Access](https://learn.microsoft.com/en-us/entra/identity/conditional-access/troubleshoot-conditional-access#policy-details)***
 
     > [!NOTE]
     >
@@ -212,7 +213,7 @@ Report-only 정책을 포함하여 Conditional Access 정책의 영향을 파악
 
     - **사용자 경험 관련 언급:** **Flagging(플래그 지정)** 기능을 활성화하면, 사용자가 브라우저에서 로그인 시도 중 인증 오류를 경험한 경우, 그 시점부터 **20분 동안** 동일한 브라우저와 동일한 클라이언트 디바이스에서 발생하는 모든 로그인 이벤트에 대해 **Sign-ins 보고서에 “Flagged for Review: Yes”**가 표시됩니다.20분이 지나면 플래그는 자동으로 해제됩니다.
     
-    *Ref: [Flagged sign-ins](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/overview-flagged-sign-ins?utm_source=copilot.com)*
+    ***Ref: [Flagged sign-ins](https://learn.microsoft.com/en-us/entra/identity/monitoring-health/overview-flagged-sign-ins?utm_source=copilot.com)***
     
     - **[Policy impact (Preview)](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only?utm_source=copilot.com#policy-impact-preview "learn.microsoft.com")** Conditional Access 정책이 조직의 대화형 로그인에 미칠 수 있는 잠재적 또는 실제 영향을 한눈에 볼 수 있는 기능입니다.
     
@@ -234,7 +235,7 @@ Microsoft Entra 로그를 Azure Monitor 로그와 아직 통합하지 않았다�
 
 Microsoft Entra 조직에서 관리자가 실수로 잠겨버리면 다른 사용자의 계정을 활성화하거나 로그인할 수 없기 때문에, 이러한 상황을 반드시 예방해야 합니다. 이를 방지하기 위해 조직 내에 두 개 이상의 비상 접근 계정(Emergency Access Accounts)을 만들어 두는 것이 좋습니다.
 
-*Ref: [Emergency Access Accounts](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access)*
+***Ref: [Emergency Access Accounts](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access)***
 
 비상 접근 계정(Emergency access accounts)은 매우 높은 권한을 가진 계정이며, 특정 개인에게 할당되지 않습니다. 이러한 계정은 일반 관리자 계정을 사용할 수 없는 비상 상황, 즉 “브레이크 글래스(break glass)” 시나리오에서만 사용하도록 제한됩니다. 비상 계정은 정말 필요한 경우에만 사용되도록 엄격히 제한하는 것이 좋습니다.
 
@@ -258,11 +259,11 @@ Microsoft Entra 조직에서 관리자가 실수로 잠겨버리면 다른 사�
 
 Break Glass 계정을 생성하는 단계에 대해 설명하세요.
 
-*Ref: [Steps to Create Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#create-emergency-access-accounts)*
+***Ref: [Steps to Create Break Glass Account](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access#create-emergency-access-accounts)***
 
 Break Glass 계정의 모범 사례에 대해 논의하세요.
 
-*Ref: [Best Practices for the Break Glass Account](#Best-Practices-for-the-Break-Glass-Account)*
+***Ref: [Best Practices for the Break Glass Account](#Best-Practices-for-the-Break-Glass-Account)***
 
 
 ### Planning for mandatory MFA for Azure sign-ins
@@ -273,19 +274,19 @@ Break Glass 계정의 모범 사례에 대해 논의하세요.
 
 **적용 단계(Enforcement phases)**와 그 단계가 **사용자 ID(user identities)**와 **워크로드 ID(workload identities)**에 미치는 영향에 대해 설명하시오.
 
-*Ref: [Enforcement phases](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#enforcement-phases)*
+***Ref: [Enforcement phases](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#enforcement-phases)***
 
-*Ref: [user identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#accounts)*
+***Ref: [user identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#accounts)***
 
-*Ref: [workload identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#migrate-user-based-service-accounts-to-workload-identities)*
+***Ref: [workload identities](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#migrate-user-based-service-accounts-to-workload-identities)***
 
 외부 인증 방법(external authentication methods)을 사용하는 외부 MFA 솔루션 지원은 현재 미리 보기(preview) 상태이며, 이를 통해 MFA 요구 사항을 충족할 수 있습니다. 기존의 Conditional Access 사용자 지정 컨트롤 미리 보기 기능은 MFA 요구 사항을 충족하지 못합니다. Microsoft Entra ID에서 외부 MFA 솔루션을 사용하려면 외부 인증 방법 미리 보기로 전환해야 합니다.
 
-*Ref: [external authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#external-authentication-methods-and-identity-providers)*
+***Ref: [external authentication methods](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#external-authentication-methods-and-identity-providers)***
 
 일부 고객은 이 MFA 요구 사항을 준비하는 데 더 많은 시간이 필요할 수 있다는 점을 설명하시오. Microsoft는 환경이 복잡하거나 기술적 제약이 있는 고객이 테넌트에 대한 적용을 2025년 3월 15일까지 연기할 수 있도록 허용하고 있습니다.
 
-*Ref: [postpone the enforcement](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#request-more-time-to-prepare-for-enforcement)*
+***Ref: [postpone the enforcement](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication#request-more-time-to-prepare-for-enforcement)***
 
 ### Universal Conditional Access through Global Secure Access
 
@@ -301,13 +302,13 @@ Break Glass 계정의 모범 사례에 대해 논의하세요.
 
 Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Access 정책을 만드는 단계를 설명하시오.
 
-*Ref: [Create a Conditional Access policy targeting Global Secure Access internet traffic](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-target-resource-microsoft-profile#create-a-conditional-access-policy-targeting-global-secure-access-internet-traffic)*
+***Ref: [Create a Conditional Access policy targeting Global Secure Access internet traffic](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-target-resource-microsoft-profile#create-a-conditional-access-policy-targeting-global-secure-access-internet-traffic)***
 
 ### Conditional Access behavior change: Improved enforcement for policies with resource exclusions
 
 2026년 5월 13일부터 리소스 제외가 포함된 Conditional Access 정책에 대해 동작 변경이 적용됩니다. 이 변경은 **Microsoft Secure Future Initiative**와 일치하는 조치입니다.
 
-*Ref: [Microsoft's Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative?msockid=22346ecb805f631739b27a6e81726266)*
+***Ref: [Microsoft's Secure Future Initiative](https://www.microsoft.com/en-us/trust-center/security/secure-future-initiative?msockid=22346ecb805f631739b27a6e81726266)***
 
 **What is changing?**
 
@@ -333,7 +334,7 @@ Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Acce
 
 이 가이드의 Authentication Context 섹션에서 몇 가지 예시를 확인할 수 있으며, 추가 시나리오는 ‘Authentication Strengths 시나리오’ 문서에서 확인할 수 있습니다.
 
-*Ref: [Scenarios for authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#scenarios-for-authentication-strengths)*
+***Ref: [Scenarios for authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#scenarios-for-authentication-strengths)***
 
 인증 강도를 지정하려면, Conditional Access 정책을 만들고 ‘**인증 강도 요구(Require authentication strength)**’ 제어를 설정하십시오.
 
@@ -341,7 +342,7 @@ Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Acce
 
 세 가지 기본 제공 인증 강도(다중 인증 강도, 패스워드리스 MFA 강도, 피싱 대응 MFA 강도) 중에서 선택할 수 있으며, 허용하려는 인증 방법 조합을 기반으로 사용자 지정 인증 강도를 만들 수도 있습니다.
 
-*Ref: [**built-in authentication strengths**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#built-in-authentication-strengths)*
+***Ref: [**built-in authentication strengths**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#built-in-authentication-strengths)***
 
 > [!NOTE]
 >
@@ -367,7 +368,7 @@ Global Secure Access 인터넷 트래픽을 대상으로 하는 Conditional Acce
 <sup>1</sup> 사용자가 소유한 요소(Something the user has)는 다음 인증 방법 중 하나를 의미합니다: 문자 메시지, 음성 통화, 푸시 알림, 소프트웨어 OATH 토큰, 또는 하드웨어 OATH 토큰.
 
 
-*Ref: [**create a custom authentication strength**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#custom-authentication-strengths)*
+***Ref: [**create a custom authentication strength**](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths#custom-authentication-strengths)***
 
 ---
 
@@ -397,17 +398,17 @@ Authentication Context를 적용할 수 있는 일반적인 시나리오를 설�
 
     ![New authentication strength](image-14.png)
 
-    *Ref: [Create and manage custom Conditional Access authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strength-advanced-options)*
+    ***Ref: [Create and manage custom Conditional Access authentication strengths](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strength-advanced-options)***
 
 1. Conditional Access 정책과 연결될 Authentication Context를 생성하시오.
 
     ![Authentication Context](image-15.png)
 
-    *Ref: [Configure authentication contexts](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps?tabs=powershell#configure-authentication-contexts)*
+    ***Ref: [Configure authentication contexts](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps?tabs=powershell#configure-authentication-contexts)***
 
 1. PIM에서 역할 설정을 수정하여 역할 활성화 시 Authentication Context가 필요하도록 구성하시오.
 
-    *Ref: [On activation, require Microsoft Entra Conditional Access authentication context](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings#on-activation-require-microsoft-entra-conditional-access-authentication-context)*
+    ***Ref: [On activation, require Microsoft Entra Conditional Access authentication context](https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings#on-activation-require-microsoft-entra-conditional-access-authentication-context)***
 
     ![Edit role setting - On Activation - authentication context](image-16.png)
 
@@ -546,7 +547,7 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
         
         **그룹 설정이 비어 있으면 새로 생성하고 그룹 설정의 "EnableMIPLabels"를 설정합니다**
         
-        *Ref: [create new group settings](https://learn.microsoft.com/en-us/entra/identity/users/groups-settings-cmdlets)*
+        ***Ref: [create new group settings](https://learn.microsoft.com/en-us/entra/identity/users/groups-settings-cmdlets)***
 
 
         ```powershell
@@ -606,7 +607,7 @@ Authentication Context를 사용하여 Microsoft Entra Conditional Access 정책
 
     1. 이제 민감도 레이블을 Microsoft Entra ID와 동기화해야 합니다. 먼저 Security & Compliance PowerShell에 연결하세요.
 
-        *Ref: [Connect to Security & Compliance PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-scc-powershell?view=exchange-ps)*
+        ***Ref: [Connect to Security & Compliance PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-scc-powershell?view=exchange-ps)***
 
         ```powershell
         
@@ -740,21 +741,21 @@ Entra ID Identity Protection은 조직을 ID 기반 위협으로부터 보호하
 
 모든 Entra ID Identity Protection 기능을 사용하려면 Microsoft Entra ID P2 라이선스가 필요하지만, 일부 제한된 기능은 Entra ID Free 및 Entra ID P1 라이선스에서도 사용할 수 있습니다. 자세한 내용은 Entra ID Protection 라이선스 요구 사항을 참고하세요.
 
-*Ref: [Entra ID Identity Protection - License requirements](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#license-requirements)*
+***Ref: [Entra ID Identity Protection - License requirements](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#license-requirements)***
 
 또한 Identity Protection을 사용하려면 사용자에게 Security Reader, Security Operator, Security Administrator, Global Reader 또는 Global Administrator 역할이 필요합니다. 자세한 내용은 Identity Protection 사용을 위한 필수 역할을 확인하세요.
 
-*Ref: [Entra ID Identity Protection - Required roles](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#required-roles)
+***Ref: [Entra ID Identity Protection - Required roles](https://learn.microsoft.com/en-us/entra/id-protection/overview-identity-protection#required-roles)***
 
 ### Risk based policies
 
 Microsoft Entra ID P2 라이선스를 보유한 조직은 Microsoft Entra ID Protection의 로그인 위험 감지 기능을 포함한 조건부 액세스 정책을 생성할 수 있습니다.
 
-*Ref: [Microsoft Entra ID Protection sign-in risk detections](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks)*
+***Ref: [Microsoft Entra ID Protection sign-in risk detections](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks)***
 
 또한 Microsoft Entra ID Protection에서 구성되었던 기존(레거시) 위험 정책은 2026년 10월 1일에 사용 중단될 예정입니다. 고객이 아직 레거시 ID Protection 정책을 사용 중이라면 조건부 액세스 정책으로 전환하도록 안내해야 합니다. 자세한 내용은 ‘Migrate ID Protection risk policies to Conditional Access’를 참고하세요.
 
-*Ref: [Migrate ID Protection risk policies to Conditional Access](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#migrate-id-protection-risk-policies-to-conditional-access)*
+***Ref: [Migrate ID Protection risk policies to Conditional Access](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-policies#migrate-id-protection-risk-policies-to-conditional-access)***
 
 위험(Risk)은 사용자([User](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#user-risk-detections)) 수준과 로그인([Sign-in](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#sign-in-risk-detections)) 수준에서 모두 감지될 수 있습니다.
 
@@ -860,15 +861,15 @@ Sign-in Risk 수준이 Medium 또는 High일 때는 Microsoft Entra 다단계 �
 
 Risk-based 정책을 사용할 때의 또 다른 장점은, 사용자가 로그인 위험(Sign-in Risk)과 사용자 위험(User Risk)을 스스로 완화(Self-remediate)할 수 있다는 점입니다.
 
-*Ref: [self-remediate their sign-in risks and user risks](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#self-remediation-with-risk-based-policy)*
+***Ref: [self-remediate their sign-in risks and user risks](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#self-remediation-with-risk-based-policy)***
 
 이를 위해 사용자는 반드시 **Self-Service Password Reset(SSPR)**에 등록되어 있어야 합니다.
 
 Password Hash Synchronization(PHS)을 활성화한 조직은 이제 온프레미스에서 비밀번호 변경을 수행하여 사용자 위험(User Risk)을 완화할 수 있습니다.
 
-*Ref: [password hash synchronization](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-phs)*
+***Ref: [password hash synchronization](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-phs)***
 
-*Ref: [allow password changes on-premises to remediate user risk.](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#allow-on-premises-password-reset-to-remediate-user-risks-preview)*
+***Ref: [allow password changes on-premises to remediate user risk.](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-remediate-unblock#allow-on-premises-password-reset-to-remediate-user-risks-preview)***
 
 ### Microsoft Entra multifactor authentication registration policy
 
@@ -886,7 +887,7 @@ MFA 등록 정책을 사용할 때의 사용자 경험에 대해 유의해야 �
 
 이 14일 동안 MFA가 조건으로 요구되지 않는 경우, 사용자는 **등록을 건너뛸 수 있습니다(bypass)**.그러나 **14일이 지나면 등록을 완료해야만 로그인 절차를 마칠 수 있습니다.**
 
-*Ref: [User experiences withMFA registration policy](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-user-experience#multifactor-authentication-registration)*
+***Ref: [User experiences withMFA registration policy](https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-user-experience#multifactor-authentication-registration)***
 
 ### Identity threat detection and response (ITDR)
 
@@ -922,11 +923,11 @@ Identity’s ITDR 대시보드를 사용하기 위해서는 다음 조건을 충
 
 일반적으로 디바이스 필터 조건을 활용할 수 있는 대표적인 시나리오를 언급해 주세요.
 
-*Ref: [Filter for devices as a condition](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices)*
+***Ref: [Filter for devices as a condition](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices)***
 
-*Ref: [Supported operators and device properties for filters](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#supported-operators-and-device-properties-for-filters)*
+***Ref: [Supported operators and device properties for filters](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#supported-operators-and-device-properties-for-filters)***
 
-*Ref: [common scenarios](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#common-scenarios)*
+***Ref: [common scenarios](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices#common-scenarios)***
 
 > [!TIP]
 >
@@ -1083,11 +1084,11 @@ Custom security attributes은 보안에 민감하며, 위임된 사용자만 관
 
 Microsoft Entra ID에서 사용자 지정 보안 속성을 추가하거나 비활성화하는 방법에 대한 문서의 지침을 따라, 아래의 속성 집합(Attribute set)과 새 속성(New attributes)을 추가하세요.
 
-*Ref: [Add or deactivate custom security attributes in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add)*
+***Ref: [Add or deactivate custom security attributes in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add)***
 
 1. "Engineering" 이름의 Attribute set을 생성합니다.
 
-    *Ref: [Add an attribute set](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-an-attribute-set)*
+    ***Ref: [Add an attribute set](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-an-attribute-set)***
 
 
     > [!NOTE]
@@ -1103,7 +1104,7 @@ Microsoft Entra ID에서 사용자 지정 보안 속성을 추가하거나 비�
     - requirePAW
     - requireAuthnStrength
     
-    *Ref: [Add a custom security attribute definition](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-a-custom-security-attribute-definition)*
+    ***Ref: [Add a custom security attribute definition](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#add-a-custom-security-attribute-definition)***
     
     ![Add a custom security attribute definition](image-40.png)
     
@@ -1114,7 +1115,7 @@ Microsoft Entra ID에서 사용자 지정 보안 속성을 추가하거나 비�
 
     속성 집합(Attribute Sets)과 사용자 지정 보안 속성(Custom Security Attributes)은 PowerShell 또는 MS Graph를 사용하여 관리할 수도 있습니다.
 
-    *Ref: [**PowerShell or MS Graph**](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#powershell-or-microsoft-graph-api)*
+    ***Ref: [**PowerShell or MS Graph**](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-add?tabs=ms-powershell#powershell-or-microsoft-graph-api)***
 
 #### Conditional Access Policy
 
@@ -1147,9 +1148,77 @@ SMS는 포함하지 않습니다.
 
     [Enable single sign-on for an enterprise application](https://learn.microsoft.com/en-nz/entra/identity/enterprise-apps/add-application-portal-setup-sso)
 
+    > [!NOTE]
+    >
+    > Sign-in 테스트 시 인증은 성공했으나 인증 후 페이지가 정상 로드되지 않음
+    >
+    > Microsoft Entra SAML Toolkit의 자체 문제일 가능성이 있어 보임. Azure AD Graph API가 dedicated되어 발생한 것으로 추정함.
+
 - 문서 *“Quickstart: Get a token and call the Microsoft Graph API by using a console app's identity”*의 지침을 따라 진행합니다.
 
     [Quickstart: Get a token and call the Microsoft Graph API by using a console app's identity](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-v2-netcore-daemon)
+
+**테스트 애플리케이션이 준비되면, 애플리케이션에 사용자 지정 보안 속성을 할당하세요.  **
+
+***Ref: [Assign a custom security attribute to an application](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-filter-for-applications#step-2-assign-a-custom-security-attribute-to-an-application)***
+
+이 예에서는 "requireAuthnStrength" 속성을 할당합니다.
+
+> [!IMPORTANT]
+>
+> **Attribute Assignment Administrator** 역할을 보유해야 합니다.
+
+
+
+![Assign a custom security attribute to an application](image-42.png)
+
+"Users and Groups"를 선택하고, **테스트 사용자**(Conditional Access 정책 할당에 사용한 동일한 사용자)를 반드시 추가하세요.
+
+![Assign users to the application](image-43.png)
+
+#### Test the policy
+
+테스트 사용자로 https://myapps.microsoft.com/ 에 로그인하세요.  
+MFA가 요청되면, 인증 강도 "Admin Approved authn methods"에 포함되지 않은 방법(예: SMS)을 사용하세요.
+
+그 다음 테스트 애플리케이션을 검색하세요.  
+이 예에서는 Microsoft Entra SAML Toolkit입니다.  
+해당 애플리케이션을 선택하면, 다른 인증 방법을 사용하라는 요청을 받게 됩니다.
+
+![My Apps](image-44.png)
+
+![Verify your identity](image-45.png)
+
+지시에 따라 인증을 완료하세요. 몇 분 후, 로그인 세부 정보에서 이전에 생성한 조건부 액세스 정책을 충족했음을 확인할 수 있습니다.
+
+![Sign-in log](image-46.png)
+
+> [!TIP]
+>
+> Another example might be: allow access only from specific network locations.
+
+### Protected Actions
+
+[**Protected actions**](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/protected-actions-overview) in
+
+Microsoft Entra ID의 보호된 작업([**Protected actions**](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/protected-actions-overview))은 조건부 액세스 정책이 할당된 권한을 의미하며, 사용자가 어떤 역할을 가지고 있거나 해당 권한을 어떻게 부여받았는지와 관계없이 추가적인 보호 계층을 적용하고자 할 때 사용됩니다.
+
+> [!IMPORTANT]
+>
+> 정책 적용은 사용자가 보호된 작업을 수행하려고 시도할 때 이루어지며, 사용자 로그인 시점이나 규칙 활성화 시점에는 적용되지 않습니다. 사용자는 필요한 경우에만 프롬프트를 받습니다.
+>
+> 또한 PIM은 조건부 액세스 정책에 할당할 수 있으며, 사용자가 역할을 활성화할 때 해당 정책이 적용됩니다.  
+> PIM 역할 활성화와 보호된 작업을 함께 사용하면 더 강력한 보호를 제공할 수 있습니다.
+
+
+예를 들어, 관리자가 조건부 액세스 정책을 업데이트할 수 있도록 하려면  
+먼저 피싱 대응 MFA(Phishing-resistant MFA) 정책을 충족하도록 요구하거나,  
+조건부 액세스 정책의 디바이스 필터를 사용해 특권 액세스 워크스테이션(Privileged Access Workstation)에서만 접근하도록 제한하거나,  
+조건부 액세스의 로그인 빈도(Session Controls)를 사용해 더 짧은 세션 시간 제한을 구성할 수 있습니다.
+
+***Ref: [device filters](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-condition-filters-for-devices)***
+
+***Ref: [sign-in frequency session controls](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-conditional-access-session-lifetime#user-sign-in-frequency)***
 
 
 

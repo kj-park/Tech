@@ -1,7 +1,8 @@
 ---
 layout: default
 title: [VBD Delivery Guidance]
-filename: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/VBD-Delivery-Guidance.md
+URL: Delivery/Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies/VBD-Delivery-Guidance
+Path: Delivery\Solution-Optimization-Entra-Identity-Protection-and-Advanced-Conditional-Access-Policies\VBD-Delivery-Guidance.md
 ms.date: 05/06/2026
 ---
 
