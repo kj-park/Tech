@@ -1,8 +1,8 @@
 ---
 layout: default
 title: [Educate - Onboarding Accelerator Microsoft Purview Data Lifecycle and Records Management]
-URL: Delivery/OA - Microsoft Purview DLM and RM
-Path: Delivery\OA - Microsoft Purview DLM and RM\index.md
+URL: Delivery/OA-Microsoft-Purview-DLM-and-RM
+Path: Delivery\OA-Microsoft-Purview-DLM-and-RM\index.md
 ms.date: 07/19/2026
 ---
 
