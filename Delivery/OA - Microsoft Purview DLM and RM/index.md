@@ -396,7 +396,14 @@ Records Management의 꽃
 
 핵심은 다음입니다.
 
-    Retention Schedule을 먼저 설계하고일반적인 대규모 보존/삭제는 DLM,법적·규제 수준의 기록 관리는 RM으로 구현하며,Retention Label · Adaptive Scope · Event-Based Retention · Disposition Review를 활용해Microsoft 365 전반의 데이터 수명주기를 통제한다.
+>Retention Schedule을 먼저 설계하고일반적인 대규모 보존/삭제는 DLM,법적·규제 수준의 기록 관리는 RM으로 구현하며,  
+>
+> - Retention Label
+> - Adaptive Scope
+> - Event-Based Retention
+> - Disposition Review
+>
+>를 활용해Microsoft 365 전반의 데이터 수명주기를 통제한다.
 
 그리고 Purview DLM/RM에서 가장 중요한 부분은 DLM vs RM, Shared Capabilities, Record/Regulatory Record, File Plan 입니다. 
 
