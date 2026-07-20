@@ -411,7 +411,7 @@ Records Management의 꽃
 
 ---
 
-Part 1. DLM vs RM 비교 + Retention Label
+[Part 1. DLM vs RM 비교 + Retention Label](Part-1-DLM-vs-RM-+-Retention-Label)
 
 - DLM vs RM
 - Retention Principles
@@ -419,7 +419,7 @@ Part 1. DLM vs RM 비교 + Retention Label
 - 라이선스
 - 고객 적용 사례
 
-Part 2. Adaptive Scope + Event Based Retention
+[Part 2. Adaptive Scope + Event Based Retention](Part-2-Adaptive-Scope-+-Event-Based-Retention)
 
 Part 3. Disposition Review
 
